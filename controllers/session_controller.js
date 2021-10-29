@@ -4,6 +4,11 @@ const Users = require("../models/users")
 
 const router = express.Router();
 
+// Fetches Userinfo if logged in
+router.get('/', (req, res) => {
+  res.json(req.session.loggedUser)
+})
+
 // Route to login
 router.post('/', async (req, res) => {
   try {
@@ -24,6 +29,10 @@ router.post('/', async (req, res) => {
   } catch (err) {
     console.log(err)
   }
+})
+
+router.delete('/', (req, res) => {
+  req.session.destroy(() => {console.log("Log out successful")})
 })
 
 module.exports = router;
