@@ -1,31 +1,37 @@
 //* DEPENDANCIES
-require("dotenv").config()
-const express = require("express");
-const mongoose = require("mongoose");
-const PORT = process.env.PORT || 3002;
-console.log("process.env.PORT: ", PORT)
+const express = require('express')
+const mongoose = require('mongoose')
+const session = require('express-session')
 
 //*CONFIGURATION
-const app = express();
-const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017/whatsCookin";
-mongoose.connect(MONGODB_URI);
-mongoose.connection.once("open", () => {
-    console.log("connected to mongoose..." + MONGODB_URI);
-});
+require('dotenv').config()
+const app = express()
+const port = process.env.PORT ?? 3002;
+mongoose.connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/whatsCookin')
+mongoose.connection.on("open", () => {
+  console.log(`Connection to MongoDB ${process.env.MONGODB_URI ? "Atlas" : ""} is open`)
+})
 
-//* MIDDLEWARE
-//!when react submits a form, its passed as JSON data so if it was express.urlencoded (like in express), it will come back as empty/error 
+// Middleware
 app.use(express.json())
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }))
 
-//* Routes
+// Routes
+const sessionController = require('./controllers/session_controller');
+app.use('/api/session', sessionController)
+const userController = require('./controllers/user');
+app.use('/api/user', userController)
+
+//* Recipe Routes
 const recipesController = require("./controllers/recipes");
 app.use("/api/recipes", recipesController);
 
-//? Test
-app.get("/", (req, res) => {
-  res.send("IT WORKS")
-});
+app.get('/', (req, res) => {
+  res.send("Hello world")
+})
 
-app.listen(PORT, () => {
-  console.log(`Whats Cookin listening at http://localhost:${PORT}`);
-});
+// Listerner
+app.listen(port, () => {
+  console.log(`Express server is live at ${port}`)
+})
+
