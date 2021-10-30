@@ -1,7 +1,9 @@
+//* DEPENDANCIES
 const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 
+//*CONFIGURATION
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT ?? 3002;
@@ -20,6 +22,10 @@ app.use('/api/session', sessionController)
 const userController = require('./controllers/user');
 app.use('/api/user', userController)
 
+//* Recipe Routes
+const recipesController = require("./controllers/recipes");
+app.use("/api/recipes", recipesController);
+
 app.get('/', (req, res) => {
   res.send("Hello world")
 })
@@ -28,3 +34,4 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Express server is live at ${port}`)
 })
+
