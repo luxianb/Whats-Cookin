@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row } from '../Containers/Index';
-import { Header, Container, Brand, Nav, NavigationLink, LogInButton, SignUpButton, ProfilePortal } from './components';
+import { Header, Container, Brand, Nav, NavigationLink, LogInButton, SignUpButton, ProfilePortal, LogOutButton } from './components';
 
 const NavigationBar = () => {
   const [loggedUser, setLoggedUser] = useState()
@@ -24,13 +24,14 @@ const NavigationBar = () => {
         <Nav>
           <NavigationLink text="Meals" to="#" />
 
-          <Row style={{justifyContent: 'flex-end', flex: 1}}>
-            {loggedUser ? (<>
+          <Row vCenter style={{justifyContent: 'flex-end', flex: 1}}>
+            {!loggedUser ? (<>
               <LogInButton />
               <SignUpButton />
-            </>) : (
+            </>) : (<>
               <ProfilePortal img={loggedUser?.profileImage}/>
-              )}
+              <LogOutButton onLogOut={() => setLoggedUser(null)} />
+              </>)}
           </Row>
           
         </Nav>

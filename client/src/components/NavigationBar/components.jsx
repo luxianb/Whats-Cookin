@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../assets/Logo.svg';
 import ProfileImage from '../ProfileImage';
 import Button from '../Buttons';
+import axios from 'axios';
 
 /** Header base container component */ 
 export const Header = styled.header`
@@ -70,6 +71,24 @@ export const LogInButton = () => (
     <Button.Ghost rounded>Log In</Button.Ghost>
   </Link>
 );
+
+export const LogOutButton = (props) => {
+  function handleLogOut() {
+    axios.delete('/api/session')
+      .then((res) => props.onLogOut(res.data))
+    ;
+  }
+
+  return (
+    <Button.Ghost 
+      rounded 
+      color={'black'}
+      style={{marginLeft: '12px'}}
+      onClick={handleLogOut}
+    >
+      Log Out
+    </Button.Ghost>
+)};
 
 export const SignUpButton = () => (
   <Link style={{ marginLeft: '12px' }} to={'#'}>
