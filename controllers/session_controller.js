@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
 })
 
 router.delete('/', (req, res) => {
-  req.session.destroy(() => {console.log("Log out successful")})
+  req.session.destroy(() => res.json("Log out successful"))
 })
 
 module.exports = router;
