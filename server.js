@@ -14,7 +14,7 @@ mongoose.connection.on("open", () => {
 
 // Middleware
 app.use(express.json())
-app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }))
+// app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }))
 
 // Routes
 const sessionController = require('./controllers/session_controller');
@@ -26,11 +26,15 @@ app.use('/api/user', userController)
 const recipesController = require("./controllers/recipes");
 app.use("/api/recipes", recipesController);
 
+//* Meal Plan Routes
+const mealPlanController = require("./controllers/mealPlan");
+app.use("/api/mealPlan", mealPlanController);
+
 app.get('/', (req, res) => {
   res.send("Hello world")
 })
 
-// Listerner
+// Listener
 app.listen(port, () => {
   console.log(`Express server is live at ${port}`)
 })
