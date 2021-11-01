@@ -3,11 +3,12 @@ import React from "react";
 const Landing = () => {
   return (
     <>
+    <div className="landing-div">
       <div>
         <h1 className="landing">Landing Image</h1>
       </div>
       <div>
-        <h2 className="landing">About Us</h2>
+        <h3 className="landing">About Us</h3>
         <p className="landing">
           Stuck at home coding and thinking about your next fancy meal? Well
           look no further because What's Cookin is your go to service provider
@@ -16,6 +17,16 @@ const Landing = () => {
           potential, so what are you waiting for, sign up today!
         </p>
       </div>
+      <div>
+        <h3 className="how">How it works</h3>
+        <div className="bar-container">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+        </div>
+      </div>
+    </div>
       {/* add their go-to recipes to share with the rest of the community and recieve reviews! Members can also keep track of recipes that they would like to experiement */}
     </>
   );
