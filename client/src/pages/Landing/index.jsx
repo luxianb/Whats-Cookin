@@ -25,6 +25,13 @@ const Landing = () => {
           <div>3</div>
           <div>4</div>
         </div>
+        <div className="bar-container" style={{"margin": "0px"}}>
+          <p>Sign Up as a member!</p>
+          <p>Customise your profile and add <br/> your next meal to the planner!</p>
+          <p>Add your own recipes and reviews!</p>
+          <p>Follow along with our ingredient <br/> checklist and recipe!</p>
+        </div>
+        
       </div>
     </div>
       {/* add their go-to recipes to share with the rest of the community and recieve reviews! Members can also keep track of recipes that they would like to experiement */}
