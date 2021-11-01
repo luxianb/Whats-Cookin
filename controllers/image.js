@@ -34,6 +34,21 @@ router.get("/", async (req, res) => {
   }
 });
 
+//* delete (use _id not cloudinary_id)
+router.delete("/:id", async (req, res) => {
+  try {
+    // Find image by id
+    let image = await Image.findById(req.params.id);
+    // Delete image from cloudinary
+    await cloudinary.uploader.destroy(image.cloudinary_id);
+    // Delete image from db
+    await image.remove();
+    res.json(image);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 
 module.exports = router;
