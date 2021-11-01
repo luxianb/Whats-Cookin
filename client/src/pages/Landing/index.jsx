@@ -1,11 +1,24 @@
-import React from 'react'
+import React from "react";
 
 const Landing = () => {
-    return (
-        <div>
-            <h1>Landing</h1>
-        </div>
-    )
-}
+  return (
+    <>
+      <div>
+        <h1 className="landing">Landing Image</h1>
+      </div>
+      <div>
+        <h2 className="landing">About Us</h2>
+        <p className="landing">
+          Stuck at home coding and thinking about your next fancy meal? Well
+          look no further because What's Cookin is your go to service provider
+          that offers you a wide array of recipes, from breakfast to dinner.
+          Members of What's Cookin are able to use our service to its fullest
+          potential, so what are you waiting for, sign up today!
+        </p>
+      </div>
+      {/* add their go-to recipes to share with the rest of the community and recieve reviews! Members can also keep track of recipes that they would like to experiement */}
+    </>
+  );
+};
 
-export default Landing
+export default Landing;
