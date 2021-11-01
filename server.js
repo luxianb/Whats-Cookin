@@ -14,9 +14,10 @@ mongoose.connection.on("open", () => {
 
 // Middleware
 app.use(express.json())
-// app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }))
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }))
 
 // Routes
+// * User Routes
 const sessionController = require('./controllers/session_controller');
 app.use('/api/session', sessionController)
 const userController = require('./controllers/user');
@@ -29,6 +30,10 @@ app.use("/api/recipes", recipesController);
 //* Meal Plan Routes
 const mealPlanController = require("./controllers/mealPlan");
 app.use("/api/mealPlan", mealPlanController);
+
+//* Review Routes
+const reviewsController = require("./controllers/reviews");
+app.use("/api/reviews", reviewsController);
 
 app.get('/', (req, res) => {
   res.send("Hello world")
