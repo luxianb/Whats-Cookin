@@ -72,6 +72,15 @@ router.put("/:id", upload.single("avatar"), async (req, res) => {
   }
 });
 
-
+//* Show specific image
+router.get("/:id", async (req, res) => {
+  try {
+    // Find image by id
+    let image = await Image.findById(req.params.id);
+    res.json(image);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 module.exports = router;
