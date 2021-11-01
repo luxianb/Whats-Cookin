@@ -24,5 +24,16 @@ router.post("/", upload.single("avatar"), async (req, res) => {
   }
 });
 
+//* find all images
+router.get("/", async (req, res) => {
+  try {
+    let image = await Image.find();
+    res.json(image);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
 
 module.exports = router;
