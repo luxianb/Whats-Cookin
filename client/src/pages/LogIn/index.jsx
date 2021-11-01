@@ -13,7 +13,7 @@ const ErrorPrompt = styled.p`
   font-size: 0.8rem;
 `
 
-export default function LogIn() {
+export default function LogIn(props) {
   const [form, setForm] =  useState({email: '', password: ''})
   const [error, setError] = useState('')
   const history = useHistory()
@@ -33,6 +33,7 @@ export default function LogIn() {
       return setError(res.data);
     }
     // ? If login successful, redirect to relevant page
+    props.onLoginSuccess(res.data)
     history.push('/') // ! change to use profile after page is completed
   }
 
