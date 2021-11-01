@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 
-//*CONFIGURATION
+//* CONFIGURATION
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT ?? 3002;
@@ -12,11 +12,11 @@ mongoose.connection.on("open", () => {
   console.log(`Connection to MongoDB ${process.env.MONGODB_URI ? "Atlas" : ""} is open`)
 })
 
-// Middleware
+//* Middleware
 app.use(express.json())
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }))
 
-// Routes
+//* Routes
 // * User Routes
 const sessionController = require('./controllers/session_controller');
 app.use('/api/session', sessionController)
@@ -35,11 +35,15 @@ app.use("/api/mealPlan", mealPlanController);
 const reviewsController = require("./controllers/reviews");
 app.use("/api/reviews", reviewsController);
 
+//* image routes
+const imageController = require("./controllers/image")
+app.use("/api/image", imageController);
+
 app.get('/', (req, res) => {
   res.send("Hello world")
 })
 
-// Listener
+//* Listener
 app.listen(port, () => {
   console.log(`Express server is live at ${port}`)
 })
