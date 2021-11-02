@@ -11,6 +11,7 @@ router.get("/seed", async (req, res) => {
     name: "Eggs Benedict",
     description: "The no. 1 Breakfast Egg",
     tags: ["Beginner", "Egg"],
+    type: "Breakfast",
     time: { hour: 0, minutes: 20 },
     ingredients: [
       { name: "Eggs", unit: "", amount: 4 },
@@ -33,6 +34,7 @@ router.get("/seed", async (req, res) => {
     name: "Chicken Rice",
     description: "The only rice you need",
     tags: ["Beginner", "Chicken", "Asian Cuisine"],
+    type: "Lunch",
     time: { hour: 2, minutes: 0 },
     ingredients: [
       { name: "Rice", unit: "cups", amount: 2 },
@@ -51,7 +53,30 @@ router.get("/seed", async (req, res) => {
   });
   await chickenRice.save();
 
-  res.send([eggsBenedict, chickenRice]);
+  const pasta = new Recipe({
+    name: "Bolognese Pasta",
+    description: "All day errday",
+    tags: ["Beginner", "Pasta"],
+    type: "Dinner",
+    time: { hour: 1, minutes: 30 },
+    ingredients: [
+      { name: "Minced meat", unit: "kg", amount: 1 },
+      { name: "Onions", unit: "g", amount: 500 },
+      { name: "Tomato Paste", unit: "g", amount: 400 },
+      { name: "Parmesan Cheese", unit: "tbs", amount: 1 },
+    ],
+    picture:
+      "https://recipetineats.com/wp-content/uploads/2018/07/Spaghetti-Bolognese.jpg",
+    steps: [
+      {
+        title: "Cook the sauce first",
+        body: "Cook the meat slightly before adding tomato paste, water and a pinch of salt",
+      },
+    ],
+  });
+  await pasta.save();
+
+  res.send([eggsBenedict, chickenRice, pasta]);
 });
 
 //? Index (All)
