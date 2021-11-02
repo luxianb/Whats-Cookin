@@ -14,12 +14,42 @@ const DisplayMeals = () => {
     async function fetchRecipeData() {
       const res = await axios.get("/api/recipes");
       setCard(res.data);
+
+      //* Filter by type (Breakfast)
+      const bkfast = res.data?.filter((item)=>{
+        return(
+            item.type === "Breakfast"
+        )
+      })
+      setBreakfast(bkfast)
+
+      //* Filter by type (Lunch)
+      const lunchData = res.data?.filter((item)=>{
+        return(
+            item.type === "Lunch"
+        )
+      })
+      setLunch(lunchData)
+
+      //* Filter by type (Dinner)
+      const dinnerData = res.data?.filter((item)=>{
+        return(
+            item.type === "Dinner"
+        )
+      })
+      setDinner(dinnerData)
+
     }
     fetchRecipeData();
-  }, []);
-  console.log("card", card);
 
-  //* Filter by type (Breakfast, Lunch, Dinner)
+  }, []);
+
+  //* All recipe data
+  console.log("All cards", card);
+  console.log("Breakfast", breakfast)
+  console.log("Lunch", lunch)
+  console.log("Dinner", dinner)
+
 
   return (
     <>
@@ -28,7 +58,7 @@ const DisplayMeals = () => {
 
         <h3>Breakfast</h3>
         <div className="container">
-          {card?.map((item) => {
+          {breakfast?.map((item) => {
             return (
               <>
                 <div key={item._id} className="card">
@@ -74,7 +104,7 @@ const DisplayMeals = () => {
 
         <h3>Lunch</h3>
         <div className="container">
-          {card?.map((item) => {
+          {lunch?.map((item) => {
             return (
               <>
                 <div key={item._id} className="card">
@@ -120,7 +150,7 @@ const DisplayMeals = () => {
 
         <h3>Dinner</h3>
         <div className="container">
-          {card?.map((item) => {
+          {dinner?.map((item) => {
             return (
               <>
                 <div key={item._id} className="card">
