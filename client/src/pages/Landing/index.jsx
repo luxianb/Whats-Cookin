@@ -100,7 +100,7 @@ const Landing = () => {
                       </h4>
                     </Link>
                     <p>
-                      {item.time.hour > 0 ? `${item.time.hour} hours` : null}{" "}
+                      {item.time.hour > 0 ? `${item.time.hour} hr` : null}{" "}
                       {item.time.minutes > 0
                         ? `${item.time.minutes} mins`
                         : null}{" "}
@@ -111,31 +111,34 @@ const Landing = () => {
             );
           })}
         </div>
-        <Link to={`/recipes`}>
+        <Link to={`/meals`}>
           <Button.Ghost
-            style={{ borderRadius: "5px", padding: "10px 30px 10px 30px" }}
+            style={{ borderRadius: "5px", padding: "10px 30px 10px 30px", marginTop: "10px" }}
           >
             See More
           </Button.Ghost>
         </Link>
-      <div className="bottom-signup">
-        <h4 style={{ margin: "20px 0px 0px 0px" }}>
-          What are you waiting for?
-        </h4>
-        <Link to={`/signup`} style={{ textDecoration: "none", color: "black" }}>
-          <Button.Alt
-            style={{
+        <div className="bottom-signup">
+          <h4 style={{ margin: "20px 0px 0px 0px" }}>
+            What are you waiting for?
+          </h4>
+          <Link
+            to={`/signup`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Button.Alt
+              style={{
                 borderRadius: "5px",
                 color: "white",
                 margin: "20px",
                 padding: "10px 30px 10px 30px",
-            }}
+              }}
             >
-            Sign Up
-          </Button.Alt>
-        </Link>
+              Sign Up
+            </Button.Alt>
+          </Link>
+        </div>
       </div>
-              </div>
     </>
   );
 };
