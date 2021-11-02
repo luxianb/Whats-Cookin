@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row } from '../../components/Containers/Index'
+import { Col, Row } from '../../components/Containers'
 
 const CreateRecipe = () => {
     return (
