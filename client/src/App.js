@@ -6,7 +6,10 @@ import CreateRecipe from "./pages/CreateRecipe/index"
 import NavigationBar from "../src/components/NavigationBar/index"
 
 
+
+
 function App() {
+
   return (
     <Router>
        <NavigationBar />
