@@ -89,7 +89,7 @@ const DisplayMeals = () => {
             );
           })}
         </div>
-        <Link to={`/recipes`}>
+        <Link to={`/meals/breakfast`}>
           <Button.Ghost
             style={{
               borderRadius: "5px",
@@ -135,7 +135,7 @@ const DisplayMeals = () => {
             );
           })}
         </div>
-        <Link to={`/recipes`}>
+        <Link to={`/meals/lunch`}>
           <Button.Ghost
             style={{
               borderRadius: "5px",
@@ -181,7 +181,7 @@ const DisplayMeals = () => {
             );
           })}
         </div>
-        <Link to={`/recipes`}>
+        <Link to={`/meals/dinner`}>
           <Button.Ghost
             style={{
               borderRadius: "5px",
