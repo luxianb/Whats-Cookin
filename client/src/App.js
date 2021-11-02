@@ -30,19 +30,19 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
 
-        <Route exact path="/meals" component={DisplayMeals}>
+        <Route exact path="/meals">
           <DisplayMeals recipes={card}/>
         </Route>
 
-        <Route exact path="/meals/breakfast" component={DisplayBreakfast}>
+        <Route exact path="/meals/breakfast">
         <DisplayBreakfast recipes={card}/>
         </Route>
 
-        <Route exact path="/meals/lunch" component={DisplayLunch}>
+        <Route exact path="/meals/lunch">
         <DisplayLunch recipes={card}/>
         </Route>
 
-        <Route exact path="/meals/dinner" component={DisplayDinner}>
+        <Route exact path="/meals/dinner">
         <DisplayDinner recipes={card}/>
         </Route>
 
