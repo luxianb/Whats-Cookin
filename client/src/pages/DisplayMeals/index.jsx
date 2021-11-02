@@ -44,7 +44,7 @@ const DisplayMeals = (props) => {
       <div className="menuIndex">
         <h1>Meals</h1>
 
-        <h3>Breakfast</h3>
+        <h3 className="mealType">Breakfast</h3>
         <div className="container">
           {breakfast?.map((item) => {
             return (
@@ -90,7 +90,7 @@ const DisplayMeals = (props) => {
           </Button.Ghost>
         </Link>
 
-        <h3>Lunch</h3>
+        <h3 className="mealType">Lunch</h3>
         <div className="container">
           {lunch?.map((item) => {
             return (
@@ -136,7 +136,7 @@ const DisplayMeals = (props) => {
           </Button.Ghost>
         </Link>
 
-        <h3>Dinner</h3>
+        <h3 className="mealType">Dinner</h3>
         <div className="container">
           {dinner?.map((item) => {
             return (
