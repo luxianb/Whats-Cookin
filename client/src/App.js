@@ -6,6 +6,7 @@ import NavigationBar from './components/NavigationBar'
 import Landing from "./pages/Landing/index"
 import CreateRecipe from "./pages/CreateRecipe/index"
 import SignUp from "./pages/SignUp";
+import DisplayMeals from "./pages/DisplayMeals";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -15,6 +16,7 @@ function App() {
       <NavigationBar userData={userData}/>
       <Switch>
         <Route exact path="/" component={Landing} />
+        <Route exact path="/meals" component={DisplayMeals} />
         <Route exact path="/create" component={CreateRecipe} />
         <Route path='/login'>
           <LogIn onLoginSuccess={(userInfo) => setUserData(userInfo)}/>
