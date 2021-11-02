@@ -93,7 +93,7 @@ export const LogOutButton = (props) => {
 )};
 
 export const SignUpButton = () => (
-  <Link style={{ marginLeft: '12px' }} to={'#'}>
+  <Link style={{ marginLeft: '12px' }} to={'/signup'}>
     <Button.Primary rounded>Sign Up</Button.Primary>
   </Link>
 );
