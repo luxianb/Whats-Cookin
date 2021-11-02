@@ -1,11 +1,13 @@
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
+//! type = breakfast/lunch/dinner
 const recipeSchema = Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
     tags: [String],
+    type: String,
     time: {
       hour: Number,
       minutes: { type: Number, min: 0, max: 59 },
