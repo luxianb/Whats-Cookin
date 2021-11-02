@@ -22,7 +22,7 @@ export default function ProfileImage(props) {
           <img src={profileIcon} alt="" style={{height: '100%', width: '100%'}}/>
         </NullPicBackground>
       ) : (
-        <img src={props.src} alt=""/>
+        <img src={props.src} alt="" style={{height: '100%', width: '100%'}}/>
       )}
     </ImageContainer>
   )
