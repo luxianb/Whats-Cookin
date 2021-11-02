@@ -7,10 +7,17 @@ const session = require('express-session')
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT ?? 3002;
-mongoose.connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/whatsCookin')
-mongoose.connection.on("open", () => {
-  console.log(`Connection to MongoDB ${process.env.MONGODB_URI ? "Atlas" : ""} is open`)
-})
+// mongoose.connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/whatsCookin')
+// mongoose.connection.on("open", () => {
+//   console.log(`Connection to MongoDB ${process.env.MONGODB_URI ? "Atlas" : ""} is open`)
+// })
+
+mongoose.connect(
+  'mongodb://localhost:27017/whatsCookin',
+  {
+    useNewUrlParser: true,
+  }
+)
 
 // Middleware
 app.use(express.json())

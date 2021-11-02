@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Col, Row } from '../../components/Containers/Index'
+import Axios from 'axios'
 // import Button from "../../components/Buttons/index"
 
 const CreateRecipe = () => {
@@ -46,6 +47,8 @@ const CreateRecipe = () => {
         setInstructions(event.target.value)
     }
 
+    
+
     // const handleSubmit=()=> { 
     //     const postURL = "mongodb://localhost:27017/whatsCookin" 
     //     fetch(postURL, {
@@ -67,7 +70,7 @@ const CreateRecipe = () => {
     // }
 
     const addTest =() => {
-        console.log(mealName)
+        console.log(mealName + description + tags + hours + minutes + amount + unit + ingridientName + stepTittle + instructions)
     }
   
     return (
