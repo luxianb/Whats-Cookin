@@ -3,8 +3,12 @@ import axios from 'axios';
 import { Row } from '../Containers';
 import { Header, Container, Brand, Nav, NavigationLink, LogInButton, SignUpButton, ProfilePortal, LogOutButton } from './components';
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
   const [loggedUser, setLoggedUser] = useState()
+
+  useEffect(() => {
+    setLoggedUser(props.userData)
+  }, [props.userData])
 
   useEffect(() => {
     async function fetchLoggedUserInfo() {
@@ -29,7 +33,7 @@ const NavigationBar = () => {
               <LogInButton />
               <SignUpButton />
             </>) : (<>
-              <ProfilePortal img={loggedUser?.profileImage}/>
+              <ProfilePortal img={loggedUser?.profileImage?.image}/>
               <LogOutButton onLogOut={() => setLoggedUser(null)} />
               </>)}
           </Row>

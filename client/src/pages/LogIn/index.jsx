@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import axios from 'axios'
-import Input, {Label} from '../../components/Input';
+import Input, {Label} from '../../components/Inputs';
 import { Col, Container, Page, Row, Section } from '../../components/Containers';
 import Button, { BackButton } from '../../components/Buttons';
 import { useHistory } from 'react-router';
