@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import DisplayMeals from "./pages/DisplayMeals";
 import DisplayBreakfast from "./pages/DisplayMeals/BreakfastAll";
 import DisplayLunch from "./pages/DisplayMeals/LunchAll";
+import DisplayDinner from "./pages/DisplayMeals/DinnerAll";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -39,6 +40,10 @@ function App() {
 
         <Route exact path="/meals/lunch" component={DisplayLunch}>
         <DisplayLunch recipes={card}/>
+        </Route>
+
+        <Route exact path="/meals/dinner" component={DisplayDinner}>
+        <DisplayDinner recipes={card}/>
         </Route>
 
         <Route exact path="/create" component={CreateRecipe} />
