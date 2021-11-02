@@ -23,8 +23,20 @@ const Landing = () => {
   return (
     <>
       <div className="landing-div">
-        <div>
-          <h1 className="landing">Landing Image</h1>
+        <div className="image-container">
+          <img
+            src={
+              "https://images.unsplash.com/photo-1505935428862-770b6f24f629?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1167&q=80"
+            }
+            alt="whatscookin"
+            style={{ height: "250px" }}
+          />
+          <div className="centered">
+            <h1 style={{ color: "black" }}>
+              <span>What's </span>
+              <span style={{ color: "#FFB800" }}>Cookin</span>
+            </h1>
+          </div>
         </div>
         <div>
           <h3 className="landing">About Us</h3>
@@ -72,45 +84,58 @@ const Landing = () => {
             return (
               <>
                 <div key={item._id} className="card" onClick={handleClick}>
-                  <Link
-                    to={`/recipes/${item._id}`}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
-                    <img
-                      src={item.picture}
-                      alt="Avatar"
-                      style={{ width: "100%" }}
-                      className="landing-image"
-                    />
-                    <div className="card-text" key={item._id}>
+                  <img
+                    src={item.picture}
+                    alt="Avatar"
+                    style={{ width: "100%" }}
+                    className="landing-image"
+                  />
+                  <div className="card-text" key={item._id}>
+                    <Link
+                      to={`/recipes/${item._id}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
                       <h4>
                         <b>{item.name}</b>
                       </h4>
-                      <p>
-                        {item.time.hour > 0 ? `${item.time.hour} hours` : null}{" "}
-                        {item.time.minutes > 0
-                          ? `${item.time.minutes} mins`
-                          : null}{" "}
-                      </p>
-                    </div>
-                  </Link>
+                    </Link>
+                    <p>
+                      {item.time.hour > 0 ? `${item.time.hour} hours` : null}{" "}
+                      {item.time.minutes > 0
+                        ? `${item.time.minutes} mins`
+                        : null}{" "}
+                    </p>
+                  </div>
                 </div>
               </>
             );
           })}
         </div>
         <Link to={`/recipes`}>
-          <Button.Ghost style={{ borderRadius: "5px" }}>See More</Button.Ghost>
+          <Button.Ghost
+            style={{ borderRadius: "5px", padding: "10px 30px 10px 30px" }}
+          >
+            See More
+          </Button.Ghost>
         </Link>
-      </div>
       <div className="bottom-signup">
-        <h4>What are you waiting for?</h4>
+        <h4 style={{ margin: "20px 0px 0px 0px" }}>
+          What are you waiting for?
+        </h4>
         <Link to={`/signup`} style={{ textDecoration: "none", color: "black" }}>
-          <Button.Alt style={{ borderRadius: "5px", color: "white" }}>
+          <Button.Alt
+            style={{
+                borderRadius: "5px",
+                color: "white",
+                margin: "20px",
+                padding: "10px 30px 10px 30px",
+            }}
+            >
             Sign Up
           </Button.Alt>
         </Link>
       </div>
+              </div>
     </>
   );
 };
