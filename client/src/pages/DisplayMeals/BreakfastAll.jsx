@@ -1,26 +1,21 @@
 import React from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const DisplayBreakfast = () => {
-  const [breakfast, setBreakfast] = useState();
+const DisplayBreakfast = (props) => {
+    const allBreakfast = props.recipes
+    console.log("bkfast props", allBreakfast)
+    const [breakfast, setBreakfast] = useState();
 
   useEffect(() => {
-    async function fetchRecipeData() {
-      const res = await axios.get("/api/recipes");
-
       //* Filter by type (Breakfast)
-      const bkfast = res.data?.filter((item)=>{
+      const bkfast = allBreakfast?.filter((item)=>{
         return(
             item.type === "Breakfast"
         )
       })
       setBreakfast(bkfast)
-    }
-    fetchRecipeData();
-
-  }, []);
+  }, [allBreakfast]);
 
   //* All recipe data
   console.log("Breakfast", breakfast)
