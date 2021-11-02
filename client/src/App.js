@@ -7,6 +7,7 @@ import Landing from "./pages/Landing/index"
 import CreateRecipe from "./pages/CreateRecipe/index"
 import SignUp from "./pages/SignUp";
 import DisplayMeals from "./pages/DisplayMeals";
+import DisplayBreakfast from "./pages/DisplayMeals/BreakfastAll";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/meals" component={DisplayMeals} />
+        <Route exact path="/meals/breakfast" component={DisplayBreakfast} />
         <Route exact path="/create" component={CreateRecipe} />
         <Route path='/login'>
           <LogIn onLoginSuccess={(userInfo) => setUserData(userInfo)}/>
