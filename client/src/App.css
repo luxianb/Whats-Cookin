@@ -7,6 +7,16 @@ h5, h6, p , a, button, input {
 }
 
 .input-text-normal {
-  padding: 20px 10px;
-  line-height: 28px;
+  /* padding: 20px 10px; */
+  /* line-height: 28px; */
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 30px;
+}
+
+.input-text-large {
+  height: 120px;
+  margin-left: 10px;
+  margin-right: 10px;
+
 }

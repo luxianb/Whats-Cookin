@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Col, Row } from '../../components/Containers/Index'
-import Button from "../../components/Buttons/index"
+// import Button from "../../components/Buttons/index"
 
 const CreateRecipe = () => {
     const [mealName, setMealName] = useState("")
@@ -17,35 +17,57 @@ const CreateRecipe = () => {
 
     const mealNameUpdate = (event) => {
         setMealName(event.target.value)
-        // setDescription(event.target.value)
-        // setTags(event.target.value)
-        // setHours(event.target.value)
-        // setMinutes(event.target.value)
-        // setAmount(event.target.value)
-        // setUnit(event.target.value)
-        // setIngridientName(event.target.value)
-        // setStepTittle(event.target.value)
-        // setInstructions(event.target.value)
+    }
+    const descriptionUpdate = (event) => {
+        setDescription(event.target.value)
+    }
+    const tagsUpdate = (event) => {
+        setTags(event.target.value)
+    }
+    const hoursUpadte = (event) => {
+        setHours(event.target.value)
+    }
+    const minutesUpdate = (event) => {
+        setMinutes(event.target.value)
+    }
+    const amountUpdate = (event) => {
+        setAmount(event.target.value)
+    }
+    const unitUpdate = (event) => {
+        setUnit(event.target.value)
+    }
+    const ingridientsUpdate = (event) => {
+        setIngridientName(event.target.value)
+    }
+    const stepTittleUpdate = (event) => {
+        setStepTittle(event.target.value)
+    }
+    const instructionsUpdate = (event) => {
+        setInstructions(event.target.value)
     }
 
-    const handleSubmit=()=> { 
-        const postURL = "mongodb://localhost:27017/whatsCookin" 
-        fetch(postURL, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                name: mealName,
-                clockedIn:false,
-                dates:[]
-            })
-        })
-        .then(()=>{
-            // Once posted, the user will be notified 
-            alert('You have been added to the system!');
-        })
+    // const handleSubmit=()=> { 
+    //     const postURL = "mongodb://localhost:27017/whatsCookin" 
+    //     fetch(postURL, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ 
+    //             name: mealName,
+    //             clockedIn:false,
+    //             dates:[]
+    //         })
+    //     })
+    //     .then(()=>{
+    //          Once posted, the user will be notified 
+    //         alert('You have been added to the system!');
+    //     })
+    // }
+
+    const addTest =() => {
+        console.log(mealName)
     }
   
     return (
@@ -57,26 +79,24 @@ const CreateRecipe = () => {
           <Col>
             <form>
              <input required onChange={mealNameUpdate} type="text" className="input-text-normal" placeholder="Meal Name"/>
-             <input type="text" className="input-text-large" placeholder="Description"/>
-             <input type="text" className="input-text-normal" placeholder="Tags"/>
-             <span>Est. Time to cook</span>
+             <input required onChange={descriptionUpdate} type="text" className="input-text-large" placeholder="Description"/>
+             <input required onChange={tagsUpdate} type="text" className="input-text-normal" placeholder="Tags"/>
+             <h4>Est. Time to cook</h4>
             <Row>
-             <input type="text" className="input-text-normal" placeholder="hours"/>
-             <input type="text" className="input-text-normal" placeholder="minutes"/>
+             <input required onChange={hoursUpadte} type="text" className="input-text-normal" placeholder="hours"/>
+             <input required onChange={minutesUpdate} type="text" className="input-text-normal" placeholder="minutes"/>
             </Row>
-             <span>Ingridients</span>
+             <h3>Ingridients</h3>
             <Row>
-             <input type="text" className="input-text-normal" placeholder="amount"/>
-             <input type="text" className="input-text-normal" placeholder="unit"/>
-             <input type="text" className="input-text-normal" placeholder="name"/>
+             <input required onChange={amountUpdate} type="text" className="input-text-normal" placeholder="amount"/>
+             <input required onChange={unitUpdate} type="text" className="input-text-normal" placeholder="unit"/>
+             <input required onChange={ingridientsUpdate} type="text" className="input-text-normal" placeholder="name"/>
             </Row>
             <div>add fields</div>
              <h3>Steps</h3>
-             <input type="text" className="input-text-normal" placeholder="Step title"/>
-             <input type="text" className="input-text-large" placeholder="Instructions"/>
-            <Button.Ghost>
-             <button type="submit"> Submit</button>
-            </Button.Ghost>
+             <input required onChange={stepTittleUpdate} type="text" className="input-text-normal" placeholder="Step title"/>
+             <input required onChange={instructionsUpdate} type="text" className="input-text-large" placeholder="Instructions"/>
+             <button onClick={addTest}>Submit</button>
             </form>
           </Col>
           <Col>
