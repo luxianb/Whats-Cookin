@@ -16,10 +16,6 @@ const Landing = () => {
   }, []);
   console.log("card", card);
 
-  const handleClick = (event) => {
-    console.log("CLICKED", event.target);
-  };
-
   return (
     <>
       <div className="landing-div">
@@ -83,7 +79,7 @@ const Landing = () => {
           {card?.map((item) => {
             return (
               <>
-                <div key={item._id} className="card" onClick={handleClick}>
+                <div key={item._id} className="card">
                   <img
                     src={item.picture}
                     alt="Avatar"
@@ -113,7 +109,12 @@ const Landing = () => {
         </div>
         <Link to={`/meals`}>
           <Button.Ghost
-            style={{ borderRadius: "5px", padding: "10px 30px 10px 30px", marginTop: "10px" }}
+            style={{
+              borderRadius: "5px",
+              padding: "10px 30px 10px 30px",
+              marginTop: "30px",
+              marginBottom: "100px",
+            }}
           >
             See More
           </Button.Ghost>
