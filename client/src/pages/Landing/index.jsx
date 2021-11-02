@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Button from "../../components/Buttons/index"
 
 const Landing = () => {
   const [card, setCard] = useState();
@@ -13,6 +15,10 @@ const Landing = () => {
     fetchRecipeData();
   }, []);
   console.log("card", card);
+
+  const handleClick = (event) => {
+    console.log("CLICKED", event.target);
+  }
 
   return (
     <>
@@ -49,19 +55,20 @@ const Landing = () => {
             </p>
           </div>
         </div>
-        <h3 style={{ "text-align": "left" }}>Meals</h3>
+        <h3 style={{ "textAlign": "left" }}>Meals</h3>
         <div className="container">
           {card?.map((item) => {
             return (
               <>
-                <div className="card">
+                <div key={item._id} className="card" onClick={handleClick} >
+                    <Link to={`/recipes/${item._id}`} style={{textDecoration: "none", color:"black"}}>
                   <img
                     src={item.picture}
                     alt="Avatar"
                     style={{ width: "100%" }}
                     className="landing-image"
                   />
-                  <div className="card-text">
+                  <div className="card-text" key={item._id}>
                     <h4>
                       <b>{item.name}</b>
                     </h4>
@@ -72,11 +79,21 @@ const Landing = () => {
                         : null}{" "}
                     </p>
                   </div>
+                        </Link>
                 </div>
               </>
             );
-          })}
+        })}
         </div>
+        <Link to={`/recipes`}>
+        <Button.Ghost style={{borderRadius: "5px"}}>See More</Button.Ghost>
+        </Link>
+      </div>
+      <div className="bottom-signup">
+      <h4>What are you waiting for?</h4>
+      <Link to={`/signup`} style={{textDecoration: "none", color:"black"}}>
+          <Button.Alt style={{borderRadius: "5px"}}>Sign Up!</Button.Alt>
+      </Link>
       </div>
     </>
   );
