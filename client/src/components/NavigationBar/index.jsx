@@ -26,7 +26,7 @@ const NavigationBar = (props) => {
         <Brand />
 
         <Nav>
-          <NavigationLink text="Meals" to="#" />
+          <NavigationLink text="Meals" to="/meals" />
 
           <Row vCenter style={{justifyContent: 'flex-end', flex: 1}}>
             {!loggedUser ? (<>
