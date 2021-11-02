@@ -1,55 +1,43 @@
 import React from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Buttons/index";
 
-const DisplayMeals = () => {
+const DisplayMeals = (props) => {
+  const allMeals = props.recipes;
+  console.log("DisplayAll meals", allMeals);
   const [card, setCard] = useState();
   const [breakfast, setBreakfast] = useState();
   const [lunch, setLunch] = useState();
   const [dinner, setDinner] = useState();
 
   useEffect(() => {
-    async function fetchRecipeData() {
-      const res = await axios.get("/api/recipes");
-      setCard(res.data);
+    setCard(allMeals);
 
-      //* Filter by type (Breakfast)
-      const bkfast = res.data?.filter((item)=>{
-        return(
-            item.type === "Breakfast"
-        )
-      })
-      setBreakfast(bkfast)
+    //* Filter by type (Breakfast)
+    const bkfast = allMeals?.filter((item) => {
+      return item.type === "Breakfast";
+    });
+    setBreakfast(bkfast);
 
-      //* Filter by type (Lunch)
-      const lunchData = res.data?.filter((item)=>{
-        return(
-            item.type === "Lunch"
-        )
-      })
-      setLunch(lunchData)
+    //* Filter by type (Lunch)
+    const lunchData = allMeals?.filter((item) => {
+      return item.type === "Lunch";
+    });
+    setLunch(lunchData);
 
-      //* Filter by type (Dinner)
-      const dinnerData = res.data?.filter((item)=>{
-        return(
-            item.type === "Dinner"
-        )
-      })
-      setDinner(dinnerData)
-
-    }
-    fetchRecipeData();
-
-  }, []);
+    //* Filter by type (Dinner)
+    const dinnerData = allMeals?.filter((item) => {
+      return item.type === "Dinner";
+    });
+    setDinner(dinnerData);
+  }, [allMeals]);
 
   //* All recipe data
   console.log("All cards", card);
-  console.log("Breakfast", breakfast)
-  console.log("Lunch", lunch)
-  console.log("Dinner", dinner)
-
+  console.log("Breakfast", breakfast);
+  console.log("Lunch", lunch);
+  console.log("Dinner", dinner);
 
   return (
     <>
