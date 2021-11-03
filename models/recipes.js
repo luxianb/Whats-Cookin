@@ -3,8 +3,8 @@ const { Schema, model } = require("mongoose");
 
 const recipeSchema = Schema(
   {
-    name: { type: String, required: true },
-    description: { type: String, required: true },
+    name: { type: String },
+    description: { type: String },
     tags: [String],
     time: {
       hour: Number,

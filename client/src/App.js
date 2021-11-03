@@ -4,7 +4,7 @@ import './App.css';
 import Landing from "./pages/Landing/index"
 import CreateRecipe from "./pages/CreateRecipe/index"
 
-import NavigationBar from "../src/components/NavigationBar/index"
+// import NavigationBar from "../src/components/NavigationBar/index"
 
 
 
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <Router>
-       <NavigationBar />
+       {/* <NavigationBar /> */}
      <div>
        <Switch>
          <Route exact path="/">

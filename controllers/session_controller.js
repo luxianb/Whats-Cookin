@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const Users = require("../models/users")
 
 const router = express.Router();
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     if (!userFound) {
       return
     }
-    const passwordMatched = await bcrypt.compare(req.body.password, userFound.password);
+    const passwordMatched = await bcryptjs.compare(req.body.password, userFound.password);
     if(!passwordMatched) {
       return
     }

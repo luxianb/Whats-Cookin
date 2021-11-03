@@ -47,32 +47,14 @@ const CreateRecipe = () => {
         setInstructions(event.target.value)
     }
 
-    
-
-    // const handleSubmit=()=> { 
-    //     const postURL = "mongodb://localhost:27017/whatsCookin" 
-    //     fetch(postURL, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ 
-    //             name: mealName,
-    //             clockedIn:false,
-    //             dates:[]
-    //         })
-    //     })
-    //     .then(()=>{
-    //          Once posted, the user will be notified 
-    //         alert('You have been added to the system!');
-    //     })
-    // }
-
-    const addTest =() => {
-        console.log(mealName + description + tags + hours + minutes + amount + unit + ingridientName + stepTittle + instructions)
+    const newRecipeData = () => {
+        Axios.post("http://localhost:4000/api/recipes/new", {
+            mealname: mealName,
+            description: description
+        })
+     console.log(mealName)
     }
-  
+
     return (
         <div>
             
@@ -81,25 +63,25 @@ const CreateRecipe = () => {
           
           <Col>
             <form>
-             <input required onChange={mealNameUpdate} type="text" className="input-text-normal" placeholder="Meal Name"/>
-             <input required onChange={descriptionUpdate} type="text" className="input-text-large" placeholder="Description"/>
-             <input required onChange={tagsUpdate} type="text" className="input-text-normal" placeholder="Tags"/>
+             <input onChange={mealNameUpdate} type="text" className="input-text-normal" placeholder="Meal Name"/>
+             <input onChange={descriptionUpdate} type="text" className="input-text-large" placeholder="Description"/>
+             <input onChange={tagsUpdate} type="text" className="input-text-normal" placeholder="Tags"/>
              <h4>Est. Time to cook</h4>
             <Row>
-             <input required onChange={hoursUpadte} type="text" className="input-text-normal" placeholder="hours"/>
-             <input required onChange={minutesUpdate} type="text" className="input-text-normal" placeholder="minutes"/>
+             <input onChange={hoursUpadte} type="text" className="input-text-normal" placeholder="hours"/>
+             <input onChange={minutesUpdate} type="text" className="input-text-normal" placeholder="minutes"/>
             </Row>
              <h3>Ingridients</h3>
             <Row>
-             <input required onChange={amountUpdate} type="text" className="input-text-normal" placeholder="amount"/>
-             <input required onChange={unitUpdate} type="text" className="input-text-normal" placeholder="unit"/>
-             <input required onChange={ingridientsUpdate} type="text" className="input-text-normal" placeholder="name"/>
+             <input onChange={amountUpdate} type="text" className="input-text-normal" placeholder="amount"/>
+             <input onChange={unitUpdate} type="text" className="input-text-normal" placeholder="unit"/>
+             <input onChange={ingridientsUpdate} type="text" className="input-text-normal" placeholder="name"/>
             </Row>
             <div>add fields</div>
              <h3>Steps</h3>
-             <input required onChange={stepTittleUpdate} type="text" className="input-text-normal" placeholder="Step title"/>
-             <input required onChange={instructionsUpdate} type="text" className="input-text-large" placeholder="Instructions"/>
-             <button onClick={addTest}>Submit</button>
+             <input onChange={stepTittleUpdate} type="text" className="input-text-normal" placeholder="Step title"/>
+             <input onChange={instructionsUpdate} type="text" className="input-text-large" placeholder="Instructions"/>
+             <button onClick={newRecipeData}>Submit</button>
             </form>
           </Col>
           <Col>
