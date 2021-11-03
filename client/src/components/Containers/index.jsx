@@ -11,6 +11,14 @@ export const Row = styled.div`
   justify-content: ${(prop) => prop.hCenter ? "center" : "initial" };
 `
 
+export const GridRow = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: ${prop => prop.flexed ? '1fr' : 'max-content'};
+  grid-template-columns: ${prop => prop.colTemplate || 'initial'};
+  grid-column-gap: ${prop => prop.gap || '12px'};
+`
+
 /** Col - flex div with vertical orientation
  * - availble props: vCenter, hCenter to handle alignment 
  */

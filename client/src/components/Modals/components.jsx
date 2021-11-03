@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ModalBack = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
   background-color: rgba(0,0,0,.1);
   flex-direction: column;
   align-items: center;

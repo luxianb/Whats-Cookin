@@ -7,6 +7,7 @@ import Landing from "./pages/Landing/index"
 import CreateRecipe from "./pages/CreateRecipe/index"
 import SignUp from "./pages/SignUp";
 import UserProfile from "./pages/UserProfile";
+import RecipePage from "./pages/Recipe";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -22,6 +23,7 @@ function App() {
         </Route>
         <Route path='/signup' component={SignUp}/>
         <Route path='/profile/:userId' component={UserProfile}/>
+        <Route path='/recipe/:recipeId' component={RecipePage}/>
       </Switch>
     </div>
   )

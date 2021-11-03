@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, NavLink, useHistory } from 'react-router-dom';
 import Logo from '../../assets/Logo.svg';
-import ProfileImage from '../ProfileImage';
+import Image from '../ImageDisplays/';
 import Button from '../Buttons';
 import axios from 'axios';
 
@@ -105,6 +105,6 @@ export const SignUpButton = () => (
 
 export const ProfilePortal = (props) => (
   <Link to={props.to} style={{ marginLeft: '12px' }}>
-    <ProfileImage src={props.img} size={'30px'} />
+    <Image.Profile src={props.img} size={'30px'} />
   </Link>
 );
