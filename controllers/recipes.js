@@ -63,33 +63,13 @@ router.get("/", async (req, res) => {
 
 //? Create
 router.post("/new", async (req, res) => {
-  const mealName = req.body.mealName;
-  const description = req.body.description;
-
-  console.log(mealName + description);
-
-  const recipes = new Recipe({
-    name: mealName,
-    description: description,
-
+  console.log("body", req.body);
+  const recipes = await Recipe.create(req.body, (err, createRecipe) => {
+    console.log("req.body",req.body)
+    console.log("recipe created", createRecipe);
   });
-
-  try {
-    await recipes.save();
-    res.send("Recipe Saved");
-  } catch (err) {
-    console.log(err);
-  }
+  res.json(recipes);
 });
-
-// router.post("/new", async (req, res) => {
-//   console.log("body", req.body);
-//   const recipes = await Recipe.create(req.body, (err, createRecipe) => {
-//     console.log("req.body",req.body)
-//     console.log("recipe created", createRecipe);
-//   });
-//   res.json(recipes);
-// });
 
 
 //? Show

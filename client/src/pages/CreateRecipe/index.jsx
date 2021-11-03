@@ -47,18 +47,24 @@ const CreateRecipe = () => {
     //     setInstructions(event.target.value)
     // }
 
-
-
-
-
-
     // const newRecipeData = () => {
-    //     Axios.post("http://localhost:4000/api/recipes/new", {
-    //         mealName: mealName,
-    //         description: description
-    //     })
-    //  console.log(mealName)
-    // }
+        //     Axios.post("http://localhost:4000/api/recipes/new", { /api/recipes/new
+            //         mealName: mealName,
+            //         description: description
+            //     })
+            //  console.log(mealName)
+            // }
+    
+    const URL = "http://localhost:4000/api/recipes/new"
+    const postRecipe = async (data) => {
+        const res = await fetch(URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ data }),
+          });
+       };
 
     const [form, setForm] = useState({
         name: String,
@@ -102,6 +108,7 @@ const CreateRecipe = () => {
                   ingridients: "", 
                   stepTittle: "", 
                   stepsBody: ""});
+        postRecipe(form);
       };
 console.log(form)
 
