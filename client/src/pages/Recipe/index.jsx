@@ -7,7 +7,6 @@ import Chip from "../../components/Chips";
 import { Col, Container, GridRow, Page, Row, Section } from "../../components/Containers";
 import Image from '../../components/ImageDisplays'
 import Modal from '../../components/Modals'
-import Input, {Label} from '../../components/Inputs'
 import {ReviewItem, StepItem} from './components'
 import ReviewInputModal from "../../components/Modals/ReviewInput";
 
@@ -61,11 +60,25 @@ export default function RecipePage(props) {
   }
 
   // Components
-  const AddToPlannerButton = () => (
-    <Button.Primary>
-      Add to Planner
-    </Button.Primary>
-  )
+  const AddToPlannerButton = () => {
+    async function handleAddToPlanner() {
+      if(!loggedUser) {
+        return setModal('reqLogin')
+      } 
+
+      const res = await axios.post(`/api/mealPlan/${params.recipeId}`)
+
+      if (typeof res.data === "object") {
+        history.push(`/profile/${loggedUser._id}?display=planner`)
+      }
+
+    }
+
+    return (
+      <Button.Primary onClick={() => handleAddToPlanner()}>
+        Add to Planner
+      </Button.Primary>
+  )}
 
   const EditButton = () => (
     <Button.Ghost color={'black'}>
