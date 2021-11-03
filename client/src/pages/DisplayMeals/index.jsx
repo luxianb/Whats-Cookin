@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "../../components/SearchBar/Index";
+import SearchBar from "../../components/SearchBar/index";
 
 const DisplayMeals = (props) => {
   const allMeals = props.recipes;
