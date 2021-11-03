@@ -72,13 +72,13 @@ const UserProfile = () => {
 						{planner.map((mealPlan) => (
 							<Card.MealPlan 
 								key={mealPlan._id}
-								name={mealPlan.recipe.name} 
-								id={mealPlan._id}
-								image={mealPlan.recipe.picture}
+								name={mealPlan?.recipe?.name} 
+								id={mealPlan?._id}
+								image={mealPlan?.recipe?.picture}
 								style={{margin: '18px 9px', marginTop: 0}}
-								currentStep={mealPlan.currentStep}
-								time={mealPlan.recipe.time}
-								shoppingList={mealPlan.shoppingList}
+								currentStep={mealPlan?.currentStep}
+								time={mealPlan?.recipe?.time}
+								shoppingList={mealPlan?.shoppingList}
 								onMealDelete={(deletedMeal) => setPlanner(planner.filter((plan) => plan._id !== deletedMeal._id))}
 							/>
 						))}
@@ -92,10 +92,10 @@ const UserProfile = () => {
 						{userRecipes.map((recipe) => {
 							return(
 								<Card.UserRecipe
-									key={recipe._id}
-									name={recipe.name} 
-									id={recipe._id}
-									image={recipe.picture}
+									key={recipe?._id}
+									name={recipe?.name} 
+									id={recipe?._id}
+									image={recipe?.picture}
 									style={{margin: '18px 9px', marginTop: 0}}
 									onRecipeDelete={(deletedRecipe) => setUserRecipes(userRecipes.filter((recipe) => recipe._id !== deletedRecipe._id))}
 								/>
