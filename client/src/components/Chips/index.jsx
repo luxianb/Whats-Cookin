@@ -5,6 +5,9 @@ const ChipContainer = styled.div`
   background-color: ${prop => prop.backgroundColor || `rgba(0,0,0,.2)`};
   padding: 3px 6px;
   border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 `
 const Text = styled.p`
   margin: 0;
@@ -12,14 +15,14 @@ const Text = styled.p`
 `
 
 const EstTimeChip = (props) => {
-  const {hour, minutes} = props.time;
+  const {time} = props;
 
   return (
-    <ChipContainer color={'#1F93FF'} backgroundColor={'rgba(31, 147, 255, .2)'}>
+    <ChipContainer color={'#1F93FF'} backgroundColor={'rgba(31, 147, 255, .2)'} style={props.style}>
       <Text>
         <i className="fa-regular fa-clock" style={{marginRight: 6}}/>
-        {hour ? `${hour}hr ` :  ''}
-        {minutes ? `${minutes}min` :  ''}
+        {time?.hour ? `${time.hour}hr ` :  ''}
+        {time?.minutes ? `${time.minutes}min` :  ''}
       </Text>
     </ChipContainer>
 )}
@@ -29,7 +32,7 @@ const ShoppingListChip = (props) => {
   const itemsGot = shoppingList.filter((item) => item.got === true).length
 
   return (
-    <ChipContainer color={'#404040'} backgroundColor={'rgba(64, 64, 64, .2)'}>
+    <ChipContainer color={'#404040'} backgroundColor={'rgba(64, 64, 64, .2)'} style={props.style}>
       <Text>
         <i className="fa-solid fa-basket-shopping" style={{marginRight: 6}}/>
         {`${itemsGot} of ${shoppingList.length}`}
