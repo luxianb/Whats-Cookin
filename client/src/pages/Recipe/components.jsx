@@ -16,15 +16,18 @@ const StepIndicator = styled(Col)`
 `
 
 export const StepItem = (props) => (
-  <Row style={{alignItems: 'flex-start'}}>
+  <Row style={{alignItems: 'flex-start', width: '45%', ...props.style}} >
     <StepIndicator style={{marginRight: 12}}>
       <h3 style={{margin: 0}}>{props?.index + 1}</h3>
     </StepIndicator>
-    <p style={{flex: 1, margin: 0}}>{props.step?.body}</p>
+    <Col style={{flex: 1}}>
+      <h3 style={{margin: 0, marginBottom: 6}}>{props.step?.title}</h3>
+      <p style={{margin: 0}}>{props.step?.body}</p>
+    </Col>
   </Row>
 )
 
-const RatingIndicator = (props) => (
+export const RatingIndicator = (props) => (
   <span>
     <i className="fa-solid fa-star" style={{marginRight: '6px', color: '#FFCB14'}} />
     {props.rating}
