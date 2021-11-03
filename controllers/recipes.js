@@ -13,8 +13,8 @@ router.get("/seed", async (req, res) => {
   const eggsBenedict = new Recipe({
     name: "Eggs Benedict",
     description: "The no. 1 Breakfast Egg",
+    // user: '6180ee47bf1a21093c8101b0',
     tags: ["Beginner", "Egg"],
-    type: "Breakfast",
     time: { hour: 0, minutes: 20 },
     ingredients: [
       { name: "Eggs", unit: "", amount: 4 },
@@ -39,7 +39,7 @@ router.get("/seed", async (req, res) => {
     name: "Chicken Rice",
     description: "The only rice you need",
     tags: ["Beginner", "Chicken", "Asian Cuisine"],
-    type: "Lunch",
+    // user: '6180ee47bf1a21093c8101b0',
     time: { hour: 2, minutes: 0 },
     ingredients: [
       { name: "Rice", unit: "cups", amount: 2 },
@@ -64,7 +64,6 @@ router.get("/seed", async (req, res) => {
     name: "Bolognese Pasta",
     description: "All day errday",
     tags: ["Beginner", "Pasta"],
-    type: "Dinner",
     time: { hour: 1, minutes: 30 },
     ingredients: [
       { name: "Minced meat", unit: "kg", amount: 1 },
@@ -91,6 +90,12 @@ router.get("/seed", async (req, res) => {
 router.get("/", async (req, res) => {
   const recipes = await Recipe.find();
   res.json(recipes);
+});
+
+//? Index (UserId)
+router.get("/user/:userId", async (req, res) => {
+  const recipies = await Recipe.find({user: req.params.userId});
+  res.json(recipies);
 });
 
 //? Create

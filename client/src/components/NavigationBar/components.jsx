@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import Logo from '../../assets/Logo.svg';
-import ProfileImage from '../ProfileImage';
+import Image from '../ImageDisplays/';
 import Button from '../Buttons';
 import axios from 'axios';
 
@@ -75,9 +75,14 @@ export const LogInButton = () => (
 );
 
 export const LogOutButton = (props) => {
+  const history = useHistory();
+
   function handleLogOut() {
     axios.delete('/api/session')
-      .then((res) => props.onLogOut(res.data))
+      .then((res) => {
+        props.onLogOut(res.data);
+        history.push('/')
+      })
     ;
   }
 
@@ -99,7 +104,7 @@ export const SignUpButton = () => (
 );
 
 export const ProfilePortal = (props) => (
-  <Link to={'#'} style={{ marginLeft: '12px' }}>
-    <ProfileImage src={props.img} size={'30px'} />
+  <Link to={props.to} style={{ marginLeft: '12px' }}>
+    <Image.Profile src={props.img} size={'30px'} />
   </Link>
 );

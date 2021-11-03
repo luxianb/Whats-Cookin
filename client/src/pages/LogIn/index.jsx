@@ -34,7 +34,7 @@ export default function LogIn(props) {
     }
     // ? If login successful, redirect to relevant page
     props.onLoginSuccess(res.data)
-    history.push('/') // ! change to use profile after page is completed
+    history.push(`/profile/${res.data._id}`)
   }
 
   return(

@@ -11,7 +11,7 @@ router.get('/', async(req, res) => {
 // Get all active reviews for recipe
 router.get('/:recipeId', async(req, res) => {
   const reviews = await Reviews.find({
-    recipe: res.params.recipeId,
+    recipe: req.params.recipeId,
     removed: {$exists: false}
   }).populate("user");
   
@@ -22,7 +22,7 @@ router.get('/:recipeId', async(req, res) => {
 // Post user review
 router.post('/:recipeId', async(req, res) => {
   req.body.recipe = req.params.recipeId;
-  req.body.user = req.session.loggedUser._id; // Comment out for testing without userid
+  req.body.user = req.session.loggedUser._id;
   
   const newReview = await Reviews.create(req.body)
   
