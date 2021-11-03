@@ -10,6 +10,7 @@ router.get("/seed", async (req, res) => {
   const eggsBenedict = new Recipe({
     name: "Eggs Benedict",
     description: "The no. 1 Breakfast Egg",
+    // user: '6180ee47bf1a21093c8101b0',
     tags: ["Beginner", "Egg"],
     time: { hour: 0, minutes: 20 },
     ingredients: [
@@ -33,6 +34,7 @@ router.get("/seed", async (req, res) => {
     name: "Chicken Rice",
     description: "The only rice you need",
     tags: ["Beginner", "Chicken", "Asian Cuisine"],
+    // user: '6180ee47bf1a21093c8101b0',
     time: { hour: 2, minutes: 0 },
     ingredients: [
       { name: "Rice", unit: "cups", amount: 2 },
@@ -60,6 +62,12 @@ router.get("/", async (req, res) => {
   res.json(recipes);
 });
 
+//? Index (UserId)
+router.get("/user/:userId", async (req, res) => {
+  const recipies = await Recipe.find({user: req.params.userId});
+  res.json(recipies);
+});
+
 //? Create
 router.post("/new", async (req, res) => {
   console.log("body", req.body);
@@ -76,6 +84,8 @@ router.get("/:id", async (req, res) => {
   const recipies = await Recipe.findById(id);
   res.json(recipies);
 });
+
+
 
 //? Edit
 router.put("/:id/edit", async (req, res) => {

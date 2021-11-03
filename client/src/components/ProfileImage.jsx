@@ -6,6 +6,9 @@ const ImageContainer = styled.div`
   width: ${(props) => props.size || `50px`};
   border-radius: 1000px;
   overflow: hidden;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
 `;
 
 const NullPicBackground = styled.div`
@@ -22,7 +25,7 @@ export default function ProfileImage(props) {
           <img src={profileIcon} alt="" style={{height: '100%', width: '100%'}}/>
         </NullPicBackground>
       ) : (
-        <img src={props.src} alt="" style={{height: '100%', width: '100%'}}/>
+        <img src={props.src} alt="" style={{height: '100%'}}/>
       )}
     </ImageContainer>
   )
