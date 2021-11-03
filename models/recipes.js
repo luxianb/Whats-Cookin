@@ -13,7 +13,10 @@ const recipeSchema = Schema(
       minutes: { type: Number, min: 0, max: 59 },
     },
     ingredients: [{ amount: Number, unit: String, name: String }],
-    picture: String,
+    picture: {
+      avatar: String,
+      cloudinary_id: String,
+    },
     steps: [{ title: String, body: String }],
     // owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   },
