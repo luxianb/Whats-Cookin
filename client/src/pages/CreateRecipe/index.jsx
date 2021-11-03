@@ -49,11 +49,20 @@ const CreateRecipe = () => {
 
     const newRecipeData = () => {
         Axios.post("http://localhost:4000/api/recipes/new", {
-            mealname: mealName,
+            mealName: mealName,
             description: description
         })
      console.log(mealName)
     }
+
+
+
+
+
+
+
+
+
 
     return (
         <div>

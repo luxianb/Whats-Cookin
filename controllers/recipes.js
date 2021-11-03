@@ -63,28 +63,15 @@ router.get("/", async (req, res) => {
 
 //? Create
 router.post("/new", async (req, res) => {
-  // const mealName = req.body.mealName;
-  // const description = req.body.description;
+  const mealName = req.body.mealName;
+  const description = req.body.description;
+
+  console.log(mealName + description);
 
   const recipes = new Recipe({
-    name: "Chicken Rice",
-    description: "The only rice you need",
-    tags: ["Beginner", "Chicken", "Asian Cuisine"],
-    time: { hour: 2, minutes: 0 },
-    ingredients: [
-      { name: "Rice", unit: "cups", amount: 2 },
-      { name: "Chicken", unit: "kg", amount: 1 },
-      { name: "Garlic", unit: "cloves", amount: 4 },
-    ],
-    picture:
-      "https://asianinspirations.com.au/wp-content/uploads/2019/07/R00376-Hainanese_Chicken_Rice-2.jpg",
-    steps: [
-      {
-        title: "Cook the rice",
-        body: "Wash rice, add pandan leaves, cook rice",
-      },
-      { title: "Steam chicken", body: "Season chicken with salt and steam" },
-    ],
+    name: mealName,
+    description: description,
+
   });
 
   try {
@@ -104,8 +91,6 @@ router.post("/new", async (req, res) => {
 //   res.json(recipes);
 // });
 
-// name: mealName,
-//     description: description,
 
 //? Show
 router.get("/:id", async (req, res) => {
