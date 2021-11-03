@@ -16,10 +16,6 @@ const Landing = () => {
   }, []);
   console.log("card", card);
 
-  const handleClick = (event) => {
-    console.log("CLICKED", event.target);
-  };
-
   return (
     <>
       <div className="landing-div">
@@ -82,60 +78,64 @@ const Landing = () => {
         <div className="container">
           {card?.map((item) => {
             return (
-              <>
-                <div key={item._id} className="card" onClick={handleClick}>
-                  <img
-                    src={item.picture}
-                    alt="Avatar"
-                    style={{ width: "100%" }}
-                    className="landing-image"
-                  />
-                  <div className="card-text" key={item._id}>
-                    <Link
-                      to={`/recipes/${item._id}`}
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      <h4>
-                        <b>{item.name}</b>
-                      </h4>
-                    </Link>
-                    <p>
-                      {item.time.hour > 0 ? `${item.time.hour} hours` : null}{" "}
-                      {item.time.minutes > 0
-                        ? `${item.time.minutes} mins`
-                        : null}{" "}
-                    </p>
-                  </div>
+              <div key={item._id} className="card">
+                <img
+                  src={item.picture.avatar}
+                  alt="Avatar"
+                  style={{ width: "100%" }}
+                  className="landing-image"
+                />
+                <div className="card-text" key={item._id}>
+                  <Link
+                    to={`/recipes/${item._id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <h4>
+                      <b>{item.name}</b>
+                    </h4>
+                  </Link>
+                  <p>
+                    {item.time.hour > 0 ? `${item.time.hour} hr` : null}{" "}
+                    {item.time.minutes > 0 ? `${item.time.minutes} mins` : null}{" "}
+                  </p>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
-        <Link to={`/recipes`}>
+        <Link to={`/meals`}>
           <Button.Ghost
-            style={{ borderRadius: "5px", padding: "10px 30px 10px 30px" }}
+            style={{
+              borderRadius: "5px",
+              padding: "10px 30px 10px 30px",
+              marginTop: "30px",
+              marginBottom: "100px",
+            }}
           >
             See More
           </Button.Ghost>
         </Link>
-      <div className="bottom-signup">
-        <h4 style={{ margin: "20px 0px 0px 0px" }}>
-          What are you waiting for?
-        </h4>
-        <Link to={`/signup`} style={{ textDecoration: "none", color: "black" }}>
-          <Button.Alt
-            style={{
+        <div className="bottom-signup">
+          <h4 style={{ margin: "20px 0px 0px 0px" }}>
+            What are you waiting for?
+          </h4>
+          <Link
+            to={`/signup`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Button.Alt
+              style={{
                 borderRadius: "5px",
                 color: "white",
                 margin: "20px",
                 padding: "10px 30px 10px 30px",
-            }}
+              }}
             >
-            Sign Up
-          </Button.Alt>
-        </Link>
+              Sign Up
+            </Button.Alt>
+          </Link>
+        </div>
       </div>
-              </div>
     </>
   );
 };

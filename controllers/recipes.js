@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipes");
+const cloudinary = require("../imageUtility/cloudinary");
+const upload = require("../imageUtility/multer");
+const Users = require("../models/users");
 
 //* Routes
 //* Initial Seed
@@ -19,8 +22,10 @@ router.get("/seed", async (req, res) => {
       { name: "Butter", unit: "g", amount: 100 },
       { name: "Chopped Parsley", unit: "tbs", amount: 2 },
     ],
-    picture:
-      "https://media-cdn.tripadvisor.com/media/photo-m/1280/14/ab/bf/5e/eggs-ben-with-bacon-delicious.jpg",
+    picture: {
+      avatar:
+        "https://media-cdn.tripadvisor.com/media/photo-m/1280/14/ab/bf/5e/eggs-ben-with-bacon-delicious.jpg",
+    },
     steps: [
       {
         title: "Bring the poaching water to a simmer",
@@ -41,8 +46,10 @@ router.get("/seed", async (req, res) => {
       { name: "Chicken", unit: "kg", amount: 1 },
       { name: "Garlic", unit: "cloves", amount: 4 },
     ],
-    picture:
-      "https://asianinspirations.com.au/wp-content/uploads/2019/07/R00376-Hainanese_Chicken_Rice-2.jpg",
+    picture: {
+      avatar:
+        "https://asianinspirations.com.au/wp-content/uploads/2019/07/R00376-Hainanese_Chicken_Rice-2.jpg",
+    },
     steps: [
       {
         title: "Cook the rice",
@@ -53,7 +60,30 @@ router.get("/seed", async (req, res) => {
   });
   await chickenRice.save();
 
-  res.send([eggsBenedict, chickenRice]);
+  const pasta = new Recipe({
+    name: "Bolognese Pasta",
+    description: "All day errday",
+    tags: ["Beginner", "Pasta"],
+    time: { hour: 1, minutes: 30 },
+    ingredients: [
+      { name: "Minced meat", unit: "kg", amount: 1 },
+      { name: "Onions", unit: "g", amount: 500 },
+      { name: "Tomato Paste", unit: "g", amount: 400 },
+      { name: "Parmesan Cheese", unit: "tbs", amount: 1 },
+    ],
+    picture: {
+      avatar:
+        "https://recipetineats.com/wp-content/uploads/2018/07/Spaghetti-Bolognese.jpg",
+    },
+    steps: [
+      {
+        title: "Cook the sauce first",
+        body: "Cook the meat slightly before adding tomato paste, water and a pinch of salt",
+      },
+    ],
+  });
+  await pasta.save();
+  res.send([eggsBenedict, chickenRice, pasta]);
 });
 
 //? Index (All)
@@ -69,13 +99,26 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 //? Create
-router.post("/new", async (req, res) => {
-  console.log("body", req.body);
-  const recipes = await Recipe.create(req.body, (err, createRecipe) => {
-    console.log("req.body",req.body)
-    console.log("recipe created", createRecipe);
-  });
-  res.json(recipes);
+router.post("/new", upload.single("avatar"), async (req, res) => {
+  console.log("req.file", req.file);
+  try {
+    // Upload image to cloudinary
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      req.body.picture = {
+        avatar: result.secure_url,
+        cloudinary_id: result.public_id,
+      };
+    }
+    const recipes = await Recipe.create(req.body, (err, createRecipe) => {
+      console.log("req.body", req.body);
+      console.log("recipe created", createRecipe);
+      console.log("error", err);
+    });
+    res.json(recipes);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 //? Show
@@ -84,8 +127,6 @@ router.get("/:id", async (req, res) => {
   const recipies = await Recipe.findById(id);
   res.json(recipies);
 });
-
-
 
 //? Edit
 router.put("/:id/edit", async (req, res) => {
