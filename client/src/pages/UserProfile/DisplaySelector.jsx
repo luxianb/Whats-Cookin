@@ -30,7 +30,11 @@ const DisplaySelector = (props) => (
     <Container>
       <Row>
         {Tabs.map((tab) => (
-          <DisplayTab onClick={() => props.onTabClick(tab.value)} active={props.currentTab === tab.value}>
+          <DisplayTab 
+            onClick={() => props.onTabClick(tab.value)} 
+            active={props.currentTab === tab.value}
+            key={tab.value}
+          >
             <TabText>{tab.name}</TabText>
           </DisplayTab>
         ))}

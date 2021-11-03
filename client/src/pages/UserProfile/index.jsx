@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
 import Card, { Portal } from '../../components/Cards';
 import { Col, Container, Page, Section } from '../../components/Containers';
-import ProfileImage from '../../components/ProfileImage';
+import Image from '../../components/ImageDisplays';
 import { useQuery } from '../../util';
 import DisplaySelector from './DisplaySelector';
 
@@ -56,7 +56,7 @@ const UserProfile = () => {
 		<Page>
 			<Section>
 				<Col hCenter>
-					<ProfileImage src={userInfo?.profileImage?.image} size={'300px'}/>
+					<Image.Profile src={userInfo?.profileImage?.image} size={'300px'}/>
 					<h1>{userInfo?.name}</h1>
 				</Col>
 			</Section>
@@ -71,6 +71,7 @@ const UserProfile = () => {
 					<CardsContainer>
 						{planner.map((mealPlan) => (
 							<Card.MealPlan 
+								key={mealPlan._id}
 								name={mealPlan.recipe.name} 
 								id={mealPlan._id}
 								image={mealPlan.recipe.picture}
@@ -90,7 +91,8 @@ const UserProfile = () => {
 						<Portal.CreateRecipe style={{margin: '18px 9px', marginTop: 0}} />
 						{userRecipes.map((recipe) => {
 							return(
-								<Card.UserRecipe 
+								<Card.UserRecipe
+									key={recipe._id}
 									name={recipe.name} 
 									id={recipe._id}
 									image={recipe.picture}

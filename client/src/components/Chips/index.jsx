@@ -17,7 +17,7 @@ const EstTimeChip = (props) => {
   return (
     <ChipContainer color={'#1F93FF'} backgroundColor={'rgba(31, 147, 255, .2)'}>
       <Text>
-        <i class="fa-regular fa-clock" style={{marginRight: 6}}/>
+        <i className="fa-regular fa-clock" style={{marginRight: 6}}/>
         {hour ? `${hour}hr ` :  ''}
         {minutes ? `${minutes}min` :  ''}
       </Text>
@@ -31,7 +31,7 @@ const ShoppingListChip = (props) => {
   return (
     <ChipContainer color={'#404040'} backgroundColor={'rgba(64, 64, 64, .2)'}>
       <Text>
-        <i class="fa-solid fa-basket-shopping" style={{marginRight: 6}}/>
+        <i className="fa-solid fa-basket-shopping" style={{marginRight: 6}}/>
         {`${itemsGot} of ${shoppingList.length}`}
       </Text>
     </ChipContainer>
