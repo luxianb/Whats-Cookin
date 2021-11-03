@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const imageBase = styled.div`
-  width: ${prop => prop.width || '300px'};
-  height: ${prop => prop.height || '400px'};
+  width: ${prop => prop.width || '400px'};
+  height: ${prop => prop.height || '600px'};
   display: flex;
   flex: 1;
   border-radius: 12px;

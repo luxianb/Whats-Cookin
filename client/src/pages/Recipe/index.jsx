@@ -99,9 +99,10 @@ export default function RecipePage(props) {
     <>
     <Page>
 
+{/* Main info display */}
       <Section>
         <Container>
-          <GridRow>
+          <GridRow colTemplate={"1fr 1fr"} gap="24px">
             <Image.Recipe src={recipe?.picture} />
             <Col>
               <h1>{recipe?.name}</h1>
@@ -114,7 +115,7 @@ export default function RecipePage(props) {
                 <AddToPlannerButton />
                 {loggedUser && recipe.user === loggedUser?._id && (
                   <EditButton />
-                )}
+                  )}
               </GridRow>
 
             </Col>
@@ -122,12 +123,13 @@ export default function RecipePage(props) {
         </Container>
       </Section>
 
+      {/* Ingredients */}
       <Section>
         <Container style={{width: '60%'}}>
           <h2 style={{alignSelf: 'flex-start'}}>Ingredients</h2>
           {recipe?.ingredients?.map((ingredient) => (
-            <p style={{textAlign: 'center', margin: 0, marginBottom: 12}}>
-              <b style={{color: '#FFB800'}}>{ingredient?.amount} {ingredient?.unit}</b> {ingredient?.name}
+            <p style={{textAlign: 'center', margin: 0, marginBottom: 12, fontSize: '1.1rem'}}>
+              <b style={{color: '#FFB800'}}>{ingredient?.amount}{ingredient?.unit}</b> {ingredient?.name}
             </p>
           ))}
 
