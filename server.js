@@ -17,6 +17,7 @@ mongoose.connection.on("open", () => {
 });
 
 //* Middleware
+app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.json());
 app.use(
   session({
@@ -49,9 +50,9 @@ app.use("/api/reviews", reviewsController);
 const imageController = require("./controllers/image");
 app.use("/api/image", imageController);
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+app.get("/*", (req, res) => {
+      res.sendFile(path.join(__dirname, "./client/build", "index.html"));
+    });
 
 //* Listener
 app.listen(port, () => {
