@@ -5,55 +5,6 @@ import Axios from 'axios'
 // import Button from "../../components/Buttons/index"
 
 const CreateRecipe = () => {
-    // const [mealName, setMealName] = useState("")
-    // const [description, setDescription] = useState("")
-    // const [tags, setTags] = useState("")
-    // const [hours, setHours] = useState("")
-    // const [minutes, setMinutes] = useState("")
-    // const [amount, setAmount] = useState("")
-    // const [unit, setUnit] = useState("")
-    // const [ingridientName, setIngridientName] = useState("")
-    // const [stepTittle, setStepTittle] = useState("")
-    // const [instructions, setInstructions] = useState("")
-
-    // const mealNameUpdate = (event) => {
-    //     setMealName(event.target.value)
-    // }
-    // const descriptionUpdate = (event) => {
-    //     setDescription(event.target.value)
-    // }
-    // const tagsUpdate = (event) => {
-    //     setTags(event.target.value)
-    // }
-    // const hoursUpadte = (event) => {
-    //     setHours(event.target.value)
-    // }
-    // const minutesUpdate = (event) => {
-    //     setMinutes(event.target.value)
-    // }
-    // const amountUpdate = (event) => {
-    //     setAmount(event.target.value)
-    // }
-    // const unitUpdate = (event) => {
-    //     setUnit(event.target.value)
-    // }
-    // const ingridientsUpdate = (event) => {
-    //     setIngridientName(event.target.value)
-    // }
-    // const stepTittleUpdate = (event) => {
-    //     setStepTittle(event.target.value)
-    // }
-    // const instructionsUpdate = (event) => {
-    //     setInstructions(event.target.value)
-    // }
-
-    // const newRecipeData = () => {
-        //     Axios.post("http://localhost:4000/api/recipes/new", { /api/recipes/new
-            //         mealName: mealName,
-            //         description: description
-            //     })
-            //  console.log(mealName)
-            // }
     
     const URL = "http://localhost:4000/api/recipes/new"
     const postRecipe = async (data) => {
@@ -62,7 +13,14 @@ const CreateRecipe = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ data }),
+            body: JSON.stringify({ 
+                name: data.name,
+                description: data.description,
+                hours: data.hours,
+                minutes: data.minutes,
+                tags: [data.tags],
+                ingridients: [data.ingridients]
+             }),
           });
        };
 
@@ -80,7 +38,7 @@ const CreateRecipe = () => {
       });
     
       const handleChange = (e) => {
-        const { name, price, description, tags, hours, minutes, amount, unit, ingridients, stepsTittle, stepsBody } = e.target;
+        const { name, description, tags, hours, minutes, amount, unit, ingridients, stepsTittle, stepsBody } = e.target;
         setForm({
           ...form,
           [name]: e.target.value,
