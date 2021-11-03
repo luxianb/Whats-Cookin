@@ -7,7 +7,7 @@ import Chip from "../../components/Chips";
 import { Col, Container, GridRow, Page, Row, Section } from "../../components/Containers";
 import Image from '../../components/ImageDisplays'
 import Modal from '../../components/Modals'
-import {ReviewItem, StepItem} from './components'
+import {RatingIndicator, ReviewItem, StepItem} from './components'
 import ReviewInputModal from "../../components/Modals/ReviewInput";
 
 export default function RecipePage(props) {
@@ -17,6 +17,15 @@ export default function RecipePage(props) {
   const [modal, setModal] = useState('')
   const params = useParams()
   const history = useHistory()
+  let reviewAvg = 0
+
+  // Calcuate the review rating for the dish
+  if (reviews.length > 0) {
+    for(const review of reviews) {
+      reviewAvg += review.rating;
+    }
+    reviewAvg /= reviews.length
+  }
   
   // On load fetch recipe data
   useEffect(() => {
@@ -96,8 +105,8 @@ export default function RecipePage(props) {
             <Image.Recipe src={recipe?.picture} />
             <Col>
               <h1>{recipe?.name}</h1>
-              {/* Add review result here */}
               <GridRow>
+                  {reviews.length > 0 && (<RatingIndicator rating={reviewAvg}/>)}
                 <Chip.EstTime time={recipe?.time} />
               </GridRow>
               <p>{recipe?.description}</p>
@@ -128,12 +137,16 @@ export default function RecipePage(props) {
       <Section>
         <Container style={{width: '60%'}}>
           <h2 style={{alignSelf: 'flex-start'}}>Steps</h2>
+          <Row style={{flexWrap: 'wrap', paddingBottom: -18, paddingRight: -18}}>
+
           {recipe?.steps?.map((step, index) => (
             <StepItem 
               index={index}
               step={step}
+              style={{marginBottom: 18, marginRight: 18}}
             />
           ))}
+          </Row>
 
         </Container>
       </Section>
