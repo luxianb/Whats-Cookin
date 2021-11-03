@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import profileIcon from '../assets/profileIcon.svg'
+import profileIcon from '../../assets/profileIcon.svg'
 
 const ImageContainer = styled.div`
   height: ${(props) => props.size || `50px`};
