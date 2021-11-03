@@ -1,52 +1,54 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../components/Buttons/index";
+// import Button from "../../components/Buttons/index";
+import SearchBar from "../../components/SearchBar";
 
 const DisplayMeals = (props) => {
   const allMeals = props.recipes;
   console.log("DisplayAll meals", allMeals);
   const [card, setCard] = useState();
-  const [breakfast, setBreakfast] = useState();
-  const [lunch, setLunch] = useState();
-  const [dinner, setDinner] = useState();
+//   const [breakfast, setBreakfast] = useState();
+//   const [lunch, setLunch] = useState();
+//   const [dinner, setDinner] = useState();
 
   useEffect(() => {
     setCard(allMeals);
 
     //* Filter by type (Breakfast)
-    const bkfast = allMeals?.filter((item) => {
-      return item.type === "Breakfast";
-    });
-    setBreakfast(bkfast);
+    // const bkfast = allMeals?.filter((item) => {
+    //   return item.type === "Breakfast";
+    // });
+    // setBreakfast(bkfast);
 
     //* Filter by type (Lunch)
-    const lunchData = allMeals?.filter((item) => {
-      return item.type === "Lunch";
-    });
-    setLunch(lunchData);
+    // const lunchData = allMeals?.filter((item) => {
+    //   return item.type === "Lunch";
+    // });
+    // setLunch(lunchData);
 
     //* Filter by type (Dinner)
-    const dinnerData = allMeals?.filter((item) => {
-      return item.type === "Dinner";
-    });
-    setDinner(dinnerData);
+//     const dinnerData = allMeals?.filter((item) => {
+//       return item.type === "Dinner";
+//     });
+//     setDinner(dinnerData);
   }, [allMeals]);
 
   //* All recipe data
   console.log("All cards", card);
-  console.log("Breakfast", breakfast);
-  console.log("Lunch", lunch);
-  console.log("Dinner", dinner);
+//   console.log("Breakfast", breakfast);
+//   console.log("Lunch", lunch);
+//   console.log("Dinner", dinner);
 
   return (
     <>
       <div className="menuIndex">
         <h1>Meals</h1>
 
-        <h3 className="mealType">Breakfast</h3>
+        {/* <h3 className="mealType">Breakfast</h3> */}
+        <SearchBar/>
         <div className="container">
-          {breakfast?.map((item) => {
+          {card?.map((item) => {
             return (
               <>
                 <div key={item._id} className="card">
@@ -77,7 +79,7 @@ const DisplayMeals = (props) => {
             );
           })}
         </div>
-        <Link to={`/meals/breakfast`}>
+        {/* <Link to={`/meals/breakfast`}>
           <Button.Ghost
             style={{
               borderRadius: "5px",
@@ -180,7 +182,7 @@ const DisplayMeals = (props) => {
           >
             See More
           </Button.Ghost>
-        </Link>
+        </Link> */}
       </div>
     </>
   );

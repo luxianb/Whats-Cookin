@@ -11,15 +11,17 @@ import DisplayMeals from "./pages/DisplayMeals";
 import DisplayBreakfast from "./pages/DisplayMeals/BreakfastAll";
 import DisplayLunch from "./pages/DisplayMeals/LunchAll";
 import DisplayDinner from "./pages/DisplayMeals/DinnerAll";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [userData, setUserData] = useState({});
-  const [card, setCard] = useState();
+  const [allMeals, setAllMeals] = useState();
 
   useEffect(() => {
     async function fetchRecipeData() {
       const res = await axios.get("/api/recipes");
-      setCard(res.data);
+      setAllMeals(res.data);
+      console.log("res.data", res.data)
     }
     fetchRecipeData();
   }, []);
@@ -31,10 +33,11 @@ function App() {
         <Route exact path="/" component={Landing} />
 
         <Route exact path="/meals">
-          <DisplayMeals recipes={card}/>
+          <DisplayMeals recipes={allMeals}/>
+          <SearchBar recipes={allMeals}/>
         </Route>
 
-        <Route exact path="/meals/breakfast">
+        {/* <Route exact path="/meals/breakfast">
         <DisplayBreakfast recipes={card}/>
         </Route>
 
@@ -44,7 +47,7 @@ function App() {
 
         <Route exact path="/meals/dinner">
         <DisplayDinner recipes={card}/>
-        </Route>
+        </Route> */}
 
         <Route exact path="/create" component={CreateRecipe} />
 

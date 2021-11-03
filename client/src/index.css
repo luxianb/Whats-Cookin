@@ -27,11 +27,15 @@ code {
   transform: translate(-50%, -50%);
 }
 
-.landing-div {
+.landing-div, .menuIndex {
   width: 80%;
   text-align: center;
   margin: 0 auto;
   font-family: 'Noto Serif Display', serif;
+}
+
+.mealType {
+  text-align: left;
 }
 
 .landing {
@@ -78,7 +82,7 @@ code {
   flex-wrap: wrap;
   width: 20%;
   height: 20%;
-  margin: 0px 5px 0px 0px;
+  margin: 0px 5px 0px 10px;
 }
 
 .container {
