@@ -9,7 +9,7 @@ const Tabs = [
 const DisplayTab = styled.div`
   color: ${prop => prop.active ? 'rgba(255, 184, 0, 1)' : 'black' };
   background-color: ${prop => prop.active ? 'rgba(255, 184, 0, .1)' : 'transparent' };
-  padding: 12px 18px;
+  padding: 6px 12px;
   margin: 0 100px;
   border-radius: 6px 6px 0 0;
   cursor: pointer;

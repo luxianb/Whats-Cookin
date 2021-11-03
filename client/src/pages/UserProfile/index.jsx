@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Card, { Portal } from '../../components/Cards';
 import { Col, Container, Page, Section } from '../../components/Containers';
 import ProfileImage from '../../components/ProfileImage';
+import { useQuery } from '../../util';
 import DisplaySelector from './DisplaySelector';
 
 const CardsContainer = styled(Container)`
@@ -15,10 +16,13 @@ const CardsContainer = styled(Container)`
 
 const UserProfile = () => {
 	const [userInfo, setUserInfo] = useState({});
-	const [display, setDisplay] = useState('recipes');
+	const [display, setDisplay] = useState('planner');
 	const [userRecipes, setUserRecipes] = useState([]);
 	const [planner, setPlanner] = useState([]);
 	const params = useParams()
+	const query = useQuery()
+	const displayQuery = query.get('display')
+
 
 	useEffect(() => {
 		async function fetchUserInfo() {
@@ -40,6 +44,13 @@ const UserProfile = () => {
 		fetchUserRecipes();
 		fetchPlannerInfo();
 	}, [params.userId])
+
+	useEffect(() => {
+		const acceptedDisplays = ['planner', 'recipes']
+		if (acceptedDisplays.indexOf(displayQuery) !== -1) {
+			setDisplay(displayQuery)
+		}
+	}, [displayQuery])
 
 	return (
 		<Page>
