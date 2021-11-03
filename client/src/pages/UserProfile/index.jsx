@@ -104,7 +104,7 @@ const UserProfile = () => {
 				</CardsContainer>
 				)}
 			</Section>
-		</Page>		
+		</Page>	
 	)
 }
 
