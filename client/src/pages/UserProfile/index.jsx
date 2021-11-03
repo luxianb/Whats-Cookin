@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom';
@@ -23,28 +24,40 @@ const UserProfile = () => {
 	const query = useQuery()
 	const displayQuery = query.get('display')
 
+	async function fetchUserInfo() {
+		const res = await axios.get(`/api/user/${params.userId}`);
+		console.log(res.data);
+		setUserInfo(res.data)
+	}
+	async function fetchUserRecipes() {
+		const res = await axios.get(`/api/recipes/user/${params.userId}`);
+		console.log(res.data);
+		setUserRecipes(res.data)
+	}
+	async function fetchPlannerInfo() {
+		const res = await axios.get(`/api/mealPlan/userPlans/${params.userId}`);
+		console.log(res.data);
+		setPlanner(res.data)
+	}
 
+	// Fetch info on page load
 	useEffect(() => {
-		async function fetchUserInfo() {
-			const res = await axios.get(`/api/user/${params.userId}`);
-			console.log(res.data);
-			setUserInfo(res.data)
-		}
-		async function fetchUserRecipes() {
-			const res = await axios.get(`/api/recipes/user/${params.userId}`);
-			console.log(res.data);
-			setUserRecipes(res.data)
-		}
-		async function fetchPlannerInfo() {
-			const res = await axios.get(`/api/mealPlan/userPlans/${params.userId}`);
-			console.log(res.data);
-			setPlanner(res.data)
-		}
 		fetchUserInfo();
 		fetchUserRecipes();
 		fetchPlannerInfo();
 	}, [params.userId])
-
+	
+	// On display switch reload display info
+	useEffect(() => {
+		if (display === 'planner') {
+			fetchPlannerInfo();
+		}
+		if (display === "recipes") {
+			fetchUserRecipes();
+		}
+	}, [display])
+	
+	// Set display based on query
 	useEffect(() => {
 		const acceptedDisplays = ['planner', 'recipes']
 		if (acceptedDisplays.indexOf(displayQuery) !== -1) {
