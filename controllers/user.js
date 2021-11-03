@@ -6,6 +6,15 @@ const upload = require("../imageUtility/multer");
 
 const router = express.Router();
 
+router.get('/:id', async(req, res) => {
+  try {
+    const userInfo = await Users.findById(req.params.id);
+    res.json(userInfo)
+  } catch(err) {
+    console.log(err)
+  }
+})
+
 // Route to create user
 router.post('/', upload.single("image"), async (req, res) => {
   try {
