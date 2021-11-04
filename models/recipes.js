@@ -18,7 +18,7 @@ const recipeSchema = Schema(
       cloudinary_id: String,
     },
     steps: [{ title: String, body: String }],
-    // owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   },
   { timestamps: true }
 );
