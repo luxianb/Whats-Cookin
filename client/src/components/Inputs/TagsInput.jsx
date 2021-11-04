@@ -31,7 +31,7 @@ export default function TagsInput(props) {
     if (props.value) {
       setValue(props.value)
     }
-  }, [])
+  }, [props.value])
 
   function handleSubmit(e) {
     const newValue = [...value, e.target.elements.tagInput.value]

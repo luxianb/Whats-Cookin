@@ -7,7 +7,7 @@ const UserRecipeCard = (prop) => {
   const history = useHistory();
 
   const EditButton = () => (
-    <Button.Primary rounded onClick={() => history.push(`#`)}>
+    <Button.Primary rounded onClick={() => history.push(`/edit/${prop.id}`)}>
       edit
     </Button.Primary>
   );

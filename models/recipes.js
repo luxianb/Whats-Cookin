@@ -6,7 +6,7 @@ const recipeSchema = Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
-    tags: [String],
+    tags: {type: [String], default: undefined},
     type: String,
     time: {
       hour: Number,

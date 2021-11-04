@@ -37,6 +37,9 @@ function App() {
         </Route>
 
         <Route exact path="/create" component={CreateRecipe} />
+        <Route exact path="/edit/:recipeId">
+          <CreateRecipe mode='edit' />
+        </Route>
 
         <Route path="/login">
           <LogIn onLoginSuccess={(userInfo) => setUserData(userInfo)} />

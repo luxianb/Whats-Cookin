@@ -106,11 +106,13 @@ router.post("/new", upload.single("avatar"), async (req, res) => {
   try {
     const parsedSteps = JSON.parse(req.body.steps)
     const parsedIngredients = JSON.parse(req.body.ingredients)
-    const parsedTime = JSON.parse(req.body.steps)
+    const parsedTime = JSON.parse(req.body.time)
+    const parsedTags = JSON.parse(req.body.tags)
 
     req.body.steps = parsedSteps
     req.body.ingredients = parsedIngredients
     req.body.time = parsedTime
+    req.body.tags = parsedTags
     req.body.owner = req.session.loggedUser._id
     
     // Upload image to cloudinary
@@ -138,9 +140,34 @@ router.get("/:id", async (req, res) => {
 });
 
 //? Edit
-router.put("/:id/edit", async (req, res) => {
+router.put("/:id/edit", upload.single("avatar"),  async (req, res) => {
   const { id } = req.params;
-  const recipies = await Recipe.findByIdAndUpdate(id, req.body);
+  console.log(req.body);
+
+  if (req.file) {
+    const recipe = await Recipe.findById(id)
+    await cloudinary.uploader.destroy(recipe.picture.cloudinary_id);
+
+    const result = await cloudinary.uploader.upload(req.file.path);
+    req.body.picture = {
+      avatar: result.secure_url,
+      cloudinary_id: result.public_id,
+    };
+  }
+
+  const parsedSteps = JSON.parse(req.body.steps)
+  const parsedIngredients = JSON.parse(req.body.ingredients)
+  const parsedTime = JSON.parse(req.body.time)
+  const parsedTags = JSON.parse(req.body.tags)
+
+  req.body.steps = parsedSteps
+  req.body.ingredients = parsedIngredients
+  req.body.time = parsedTime
+  req.body.tags = parsedTags
+
+  console.log(req.body);
+
+  const recipies = await Recipe.findByIdAndUpdate(id, {$set: req.body}, {new: true});
   res.json(recipies);
 });
 
