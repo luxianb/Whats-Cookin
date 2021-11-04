@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Buttons/index";
+import Card from "../../components/Cards";
+import { Section } from "../../components/Containers";
 
 const Landing = () => {
   const [card, setCard] = useState();
@@ -34,7 +36,7 @@ const Landing = () => {
             </h1>
           </div>
         </div>
-        <div>
+        <Section>
           <h3 className="landing">About Us</h3>
           <p className="landing">
             Stuck at home coding and thinking about your next fancy meal? Well
@@ -43,8 +45,8 @@ const Landing = () => {
             Members of What's Cookin are able to use our service to its fullest
             potential, so what are you waiting for, sign up today!
           </p>
-        </div>
-        <div>
+        </Section>
+        <Section>
           <h3 className="how">How it works</h3>
           <div className="how-container">
             <div className="bar-container">
@@ -73,34 +75,21 @@ const Landing = () => {
           </div>
 
           <div className="bar-container" style={{ margin: "0px" }}></div>
-        </div>
+        </Section>
         <h3 style={{ textAlign: "left" }}>Meals</h3>
-        <div className="container">
-          {card?.map((item) => {
-            return (
-              <div key={item._id} className="card">
-                <img
-                  src={item.picture.avatar}
-                  alt="Avatar"
-                  style={{ width: "100%" }}
-                  className="landing-image"
+        <div className="container" style={{paddingBottom: '-12px', justifyContent: 'center'}}>
+          {card?.map((item, index) => {
+            return (<>
+              {index < 5 && (
+                <Card.Recipe
+                  id={item._id}
+                  image={item.picture.avatar}
+                  name={item.name}
+                  time={item.time}
+                  style={{margin: '6px 12px', marginTop: 0}}
                 />
-                <div className="card-text" key={item._id}>
-                  <Link
-                    to={`/recipes/${item._id}`}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
-                    <h4>
-                      <b>{item.name}</b>
-                    </h4>
-                  </Link>
-                  <p>
-                    {item.time.hour > 0 ? `${item.time.hour} hr` : null}{" "}
-                    {item.time.minutes > 0 ? `${item.time.minutes} mins` : null}{" "}
-                  </p>
-                </div>
-              </div>
-            );
+              )}
+            </>);
           })}
         </div>
         <Link to={`/meals`}>
@@ -115,7 +104,8 @@ const Landing = () => {
             See More
           </Button.Ghost>
         </Link>
-        <div className="bottom-signup">
+
+        <Section className="bottom-signup" last>
           <h4 style={{ margin: "20px 0px 0px 0px" }}>
             What are you waiting for?
           </h4>
@@ -134,7 +124,7 @@ const Landing = () => {
               Sign Up
             </Button.Alt>
           </Link>
-        </div>
+        </Section>
       </div>
     </>
   );
