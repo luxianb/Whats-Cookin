@@ -103,8 +103,16 @@ router.get("/user/:userId", async (req, res) => {
 
 //? Create
 router.post("/new", upload.single("avatar"), async (req, res) => {
-  console.log("req.file", req.file);
   try {
+    const parsedSteps = JSON.parse(req.body.steps)
+    const parsedIngredients = JSON.parse(req.body.ingredients)
+    const parsedTime = JSON.parse(req.body.steps)
+
+    req.body.steps = parsedSteps
+    req.body.ingredients = parsedIngredients
+    req.body.time = parsedTime
+    req.body.owner = req.session.loggedUser._id
+    
     // Upload image to cloudinary
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path);
@@ -113,12 +121,10 @@ router.post("/new", upload.single("avatar"), async (req, res) => {
         cloudinary_id: result.public_id,
       };
     }
-    const recipes = await Recipe.create(req.body, (err, createRecipe) => {
-      console.log("req.body", req.body);
-      console.log("recipe created", createRecipe);
-      console.log("error", err);
-    });
-    res.json(recipes);
+
+    const createdRecipe = await Recipe.create(req.body);
+
+    res.json(createdRecipe);
   } catch (err) {
     console.log(err);
   }

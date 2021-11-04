@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Users = require("../models/users")
 
 const router = express.Router();
@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   res.json(req.session.loggedUser)
 })
 
-// Route to login
+// Route to logins
 router.post('/', async (req, res) => {
   try {
     console.log("res.body",req.body)

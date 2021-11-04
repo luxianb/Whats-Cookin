@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Users = require("../models/users")
 const cloudinary = require("../imageUtility/cloudinary");
 const upload = require("../imageUtility/multer");

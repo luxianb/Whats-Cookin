@@ -1,11 +1,13 @@
 //* DEPENDANCIES
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const session = require("express-session");
 
 //* CONFIGURATION
 require("dotenv").config();
 const app = express();
+// const port = 4000;
 const port = process.env.PORT ?? 3002;
 mongoose.connect(
   process.env.MONGODB_URI ?? "mongodb://localhost:27017/whatsCookin"
@@ -20,6 +22,7 @@ mongoose.connection.on("open", () => {
 const path = require('path');
 app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.json());
+app.use(cors())
 app.use(
   session({
     secret: process.env.SECRET,
@@ -59,3 +62,17 @@ app.get("/*", (req, res) => {
 app.listen(port, () => {
   console.log(`Express server is live at ${port}`);
 });
+
+
+
+
+
+// const app = express();
+// const port = 4000;
+
+// mongoose.connect(
+//   "mongodb+srv://afaris:afaris2127@firstcluster.r8zxu.mongodb.net/whatscookin?retryWrites=true&w=majority",
+//   {
+//     useNewUrlParser: true,
+//   }
+// );
