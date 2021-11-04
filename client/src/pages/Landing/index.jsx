@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Buttons/index";
 import Card from "../../components/Cards";
 import { Section } from "../../components/Containers";
+import { Banner } from "./components";
+import Footer from "../../components/Footer";
 
 const Landing = () => {
   const [card, setCard] = useState();
@@ -16,26 +18,13 @@ const Landing = () => {
     }
     fetchRecipeData();
   }, []);
-  console.log("card", card);
+  // console.log("card", card);
 
   return (
     <>
       <div className="landing-div">
-        <div className="image-container">
-          <img
-            src={
-              "https://images.unsplash.com/photo-1505935428862-770b6f24f629?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1167&q=80"
-            }
-            alt="whatscookin"
-            style={{ height: "250px" }}
-          />
-          <div className="centered">
-            <h1 style={{ color: "black" }}>
-              <span>What's </span>
-              <span style={{ color: "#FFB800" }}>Cookin</span>
-            </h1>
-          </div>
-        </div>
+        <Banner />
+
         <Section>
           <h3 className="landing">About Us</h3>
           <p className="landing">
@@ -46,6 +35,7 @@ const Landing = () => {
             potential, so what are you waiting for, sign up today!
           </p>
         </Section>
+
         <Section>
           <h3 className="how">How it works</h3>
           <div className="how-container">
@@ -106,9 +96,10 @@ const Landing = () => {
         </Link>
 
         <Section className="bottom-signup" last>
-          <h4 style={{ margin: "20px 0px 0px 0px" }}>
+          <h3 style={{ margin: 0, marginBottom: 10 }}>
             What are you waiting for?
-          </h4>
+          </h3>
+          <p style={{margin: 0, marginBottom: 20, opacity: .6}}>Sign up now and start your journey to great meals!</p>
           <Link
             to={`/signup`}
             style={{ textDecoration: "none", color: "black" }}
@@ -126,6 +117,7 @@ const Landing = () => {
           </Link>
         </Section>
       </div>
+      <Footer />
     </>
   );
 };
