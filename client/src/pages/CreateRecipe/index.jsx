@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Col, Row } from '../../components/Containers/Index'
+import { Col, Row } from '../../components/Containers/index'
 import Axios from 'axios'
 // import Button from "../../components/Buttons/index"
 
@@ -70,8 +70,10 @@ const CreateRecipe = () => {
                     "name": `${form.name}`,
                     "description": `${form.description}`,
                     "tags": [`${form.tags}`],
+                    "type": "Lunch",
                     "time": {"hour": `${form.hours}`, "minutes": `${form.minutes}`},
                     "ingredients": [{"amount": `${form.amount}`, "unit": `${form.unit}`, "name": `${form.ingridients}`}],
+                    "picture": {"avatar": "https://media-cdn.tripadvisor.com/media/photo-m/1280/14/ab/bf/5e/eggs-ben-with-bacon-delicious.jpg", "cloudinary_id": ""},
                     "steps": [{"title": `${form.title}`, "body": `${form.body}`}]
                 }),
               });

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import Logo from '../../assets/Logo.svg';
-import ProfileImage from '../ProfileImage';
+import Image from '../ImageDisplays/';
 import Button from '../Buttons';
 import axios from 'axios';
 
@@ -9,13 +9,15 @@ import axios from 'axios';
 export const Header = styled.header`
   background-color: white;
   width: 100%;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  box-shadow: 0 0 12px rgba(0,0,0,.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
   padding: 0 18px;
   height: 60px;
+  z-index: 2;
+  position: relative;
 `;
 
 /** Header content container - restricts sizing of components within header 
@@ -67,15 +69,20 @@ export const NavigationLink = (props) => (
 );
 
 export const LogInButton = () => (
-  <Link style={{ marginLeft: '12px' }} to={'#'}>
+  <Link style={{ marginLeft: '12px' }} to={'/login'}>
     <Button.Ghost rounded>Log In</Button.Ghost>
   </Link>
 );
 
 export const LogOutButton = (props) => {
+  const history = useHistory();
+
   function handleLogOut() {
     axios.delete('/api/session')
-      .then((res) => props.onLogOut(res.data))
+      .then((res) => {
+        props.onLogOut(res.data);
+        history.push('/')
+      })
     ;
   }
 
@@ -91,13 +98,13 @@ export const LogOutButton = (props) => {
 )};
 
 export const SignUpButton = () => (
-  <Link style={{ marginLeft: '12px' }} to={'#'}>
+  <Link style={{ marginLeft: '12px' }} to={'/signup'}>
     <Button.Primary rounded>Sign Up</Button.Primary>
   </Link>
 );
 
 export const ProfilePortal = (props) => (
-  <Link to={'#'} style={{ marginLeft: '12px' }}>
-    <ProfileImage src={props.img} size={'30px'} />
+  <Link to={props.to} style={{ marginLeft: '12px' }}>
+    <Image.Profile src={props.img} size={'30px'} />
   </Link>
 );

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row } from '../Containers/Index';
+import { Row } from '../Containers';
 import { Header, Container, Brand, Nav, NavigationLink, LogInButton, SignUpButton, ProfilePortal, LogOutButton } from './components';
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
   const [loggedUser, setLoggedUser] = useState()
+
+  useEffect(() => {
+    setLoggedUser(props.userData)
+  }, [props.userData])
 
   useEffect(() => {
     async function fetchLoggedUserInfo() {
@@ -22,14 +26,14 @@ const NavigationBar = () => {
         <Brand />
 
         <Nav>
-          <NavigationLink text="Meals" to="#" />
+          <NavigationLink text="Meals" to="/meals" />
 
           <Row vCenter style={{justifyContent: 'flex-end', flex: 1}}>
             {!loggedUser ? (<>
               <LogInButton />
               <SignUpButton />
             </>) : (<>
-              <ProfilePortal img={loggedUser?.profileImage}/>
+              <ProfilePortal img={loggedUser?.profileImage?.image} to={`/profile/${loggedUser._id}`}/>
               <LogOutButton onLogOut={() => setLoggedUser(null)} />
               </>)}
           </Row>
