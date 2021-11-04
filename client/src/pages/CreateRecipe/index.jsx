@@ -48,7 +48,7 @@ const CreateRecipe = () => {
 		name: '',
 		description: '',
 		tags: [],
-		time: {hours: '', minutes: ''},
+		time: {hour: '', minutes: ''},
 		avatar: null,
 	});
 
@@ -123,7 +123,7 @@ const CreateRecipe = () => {
 			errors.description = "The description of your recipe"
 		}
 
-		if (!form.time.hours && !form.time.minutes) {
+		if (!form.time.hour && !form.time.minutes) {
 			errors.time = "Include an estimate cooking time"
 		}
 
@@ -231,7 +231,7 @@ const CreateRecipe = () => {
 									<p style={{ margin: 0 }}>Est. Time to cook</p>
 									<Row vCenter>
 										<Input
-											onChange={(e) => setForm({...form, time: {...form.time, hours: e.target.value}})}
+											onChange={(e) => setForm({...form, time: {...form.time, hour: e.target.value}})}
 											value={form.time.hours}
 											type="number"
 											name="hours"
