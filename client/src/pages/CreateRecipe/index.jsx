@@ -7,71 +7,78 @@ import Axios from 'axios'
 const CreateRecipe = () => {
     
     const URL = "http://localhost:4000/api/recipes/new"
-    const postRecipe = async (data) => {
-        const res = await fetch(URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
-                name: data.name,
-                description: data.description,
-                hours: data.hours,
-                minutes: data.minutes,
-                tags: [data.tags],
-                ingridients: [data.ingridients]
-             }),
-          });
-       };
-
     const [form, setForm] = useState({
         name: String,
         description: String,
-        tags: Number,
-        hours: Number,
+        tags: Array,
+        hours: Number, 
         minutes: Number,
         amount: Number,
         unit: String,
         ingridients: String,
-        stepsTittle: String,
-        stepsBody: String
-      });
+        title: String,
+        body: String
+    });
+    console.log(form)
     
-      const handleChange = (e) => {
-        const { name, description, tags, hours, minutes, amount, unit, ingridients, stepsTittle, stepsBody } = e.target;
+    const handleChange = (e) => {
+        const { name, description, tags, hours, minutes, amount, unit, ingridients, title, body } = e.target;
         setForm({
-          ...form,
-          [name]: e.target.value,
-          [description]: e.target.value,
-          [tags]: e.target.value,
-          [hours]: e.target.value,
-          [minutes]: e.target.value,
-          [amount]: e.target.value,
-          [unit]: e.target.value,
-          [ingridients]: e.target.value,
-          [stepsTittle]: e.target.value,
-          [stepsBody]: e.target.value
+            ...form,
+            [name]: e.target.value,
+            [description]: e.target.value,
+            [tags]: e.target.value,
+            [hours]: e.target.value,
+            [minutes]: e.target.value,
+            [amount]: e.target.value,
+            [unit]: e.target.value,
+            [ingridients]: e.target.value,
+            [title]: e.target.value,
+            [body]: e.target.value
         });
-      };
+    };
     
-      const handleSubmit = (e) => {
+    
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setForm({ name: "", 
-                  description: "", 
-                  tags: [], 
-                  hours: Number, 
-                  minutes: Number, 
-                  amount: Number, 
-                  unit: "",
-                  ingridients: "", 
-                  stepTittle: "", 
-                  stepsBody: ""});
-        postRecipe(form);
-      };
-console.log(form)
-
-    return (
-        <div>
+        setForm({ 
+            name: String, 
+            description: String, 
+            tags: Array,
+            hours: Number, 
+            minutes: Number, 
+            unit: String,
+            amount: Number,
+            ingridients: Array, 
+            title: String, 
+            body: String
+        });
+            postRecipe(form);
+     };
+        console.log(form)
+        
+        const postRecipe = async (data) => {
+            // const sendData = {
+            //     ...form, time: { hour: form.hour, minutes: form.minutes }
+            // }
+            const res = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "name": `${form.name}`,
+                    "description": `${form.description}`,
+                    "tags": [`${form.tags}`],
+                    "time": {"hour": `${form.hours}`, "minutes": `${form.minutes}`},
+                    "ingredients": [{"amount": `${form.amount}`, "unit": `${form.unit}`, "name": `${form.ingridients}`}],
+                    "steps": [{"title": `${form.title}`, "body": `${form.body}`}]
+                }),
+              });
+           };
+        
+        return (
+            <div>
             
           <h1>Add a Recipe</h1>
           <Row>
@@ -84,7 +91,7 @@ console.log(form)
               name="name" 
               className="input-text-normal" 
               placeholder="Meal Name"
-              />
+             />
              <input 
               onChange={(e) => handleChange(e)} 
               value={form.description} 
@@ -138,7 +145,7 @@ console.log(form)
              placeholder="Unit"
              />
              <input 
-             onChange={(e) => handleChange(e)}
+             onChange={(e) => handleChange(e)} 
              value={form.ingridients} 
              type="text" 
              name="ingridients" 
@@ -149,18 +156,18 @@ console.log(form)
             <div>add fields</div>
              <h3>Steps</h3>
              <input 
-             onChange={(e) => handleChange(e)}
-             value={form.stepsTittle} 
+             onChange={(e) => handleChange(e)} 
+             value={form.title} 
              type="text" 
-             name="stepsTittle" 
+             name="title" 
              className="input-text-normal" 
              placeholder="Step Tittle"
              />
              <input 
-             onChange={(e) => handleChange(e)}
-             value={form.stepsBody} 
+             onChange={(e) => handleChange(e)} 
+             value={form.body} 
              type="text" 
-             name="stepsBody" 
+             name="body" 
              className="input-text-normal" 
              placeholder="Step Instructions"
              />
