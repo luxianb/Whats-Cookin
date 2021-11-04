@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory, useParams,  } from "react-router";
-import {Link} from 'react-router-dom';
 import Button from "../../components/Buttons";
 import Chip from "../../components/Chips";
 import { Col, Container, GridRow, Page, Row, Section } from "../../components/Containers";
 import Image from '../../components/ImageDisplays'
-import Modal from '../../components/Modals'
 import {RatingIndicator, ReviewItem, StepItem} from './components'
 import ReviewInputModal from "../../components/Modals/ReviewInput";
+import LoginRequiredModal from "../../components/Modals/LoginRequired";
 
 export default function RecipePage(props) {
   const [recipe, setRecipe] = useState({})
@@ -99,11 +98,11 @@ export default function RecipePage(props) {
     <>
     <Page>
 
-{/* Main info display */}
-      <Section>
+      {/* Main info display */}
+      <Section first>
         <Container>
           <GridRow colTemplate={"1fr 1fr"} gap="24px">
-            <Image.Recipe src={recipe?.picture} />
+            <Image.Recipe src={recipe?.picture?.avatar} />
             <Col>
               <h1>{recipe?.name}</h1>
               <GridRow>
@@ -113,7 +112,7 @@ export default function RecipePage(props) {
               <p>{recipe?.description}</p>
               <GridRow>
                 <AddToPlannerButton />
-                {loggedUser && recipe.user === loggedUser?._id && (
+                {loggedUser && recipe.owner === loggedUser?._id && (
                   <EditButton />
                   )}
               </GridRow>
@@ -153,7 +152,7 @@ export default function RecipePage(props) {
         </Container>
       </Section>
 
-      <Section>
+      <Section last>
         <Container style={{width: '60%'}}>
           <Row vCenter style={{justifyContent: 'space-between'}}>
             <h2 style={{alignSelf: 'flex-start'}}>Reviews</h2>
@@ -175,26 +174,7 @@ export default function RecipePage(props) {
     {modal && (
       <>
       {modal === 'reqLogin' && (
-        <Modal>
-          <h3 style={{margin: 0, marginBottom: 6}}>Login Required</h3>
-          <p style={{margin: 0, marginBottom: 18, fontSize: '.8rem'}}>Don't have an account yet? Create one <Link to="/signup">here</Link></p>
-          <GridRow flexed>
-            <Button.Ghost 
-              color="black" 
-              onClick={() => setModal('')}
-              rounded
-            >
-              Back
-            </Button.Ghost>
-            <Button.Primary 
-              color="#FFCB14" 
-              onClick={() => history.push('/login')}
-              rounded
-            >
-              Log In
-            </Button.Primary>
-          </GridRow>
-        </Modal>
+        <LoginRequiredModal closeModal={() => setModal('')} />
       )}
 
       {modal === 'postReview' && (

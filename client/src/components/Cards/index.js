@@ -1,3 +1,4 @@
+import Recipe from './GeneralRecipeCard'
 import UserRecipe from './UserRecipeCard'
 import MealPlan from './MealPlanCard'
 import CreateRecipe from './CreateRecipePortal';
@@ -10,7 +11,8 @@ export const Portal = {
 
 const Card = {
   UserRecipe,
-  MealPlan
+  MealPlan,
+  Recipe
 }
 
 export default Card
