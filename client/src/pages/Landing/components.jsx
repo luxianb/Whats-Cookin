@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Logo from '../../assets/Logo.svg'
+import { Col, GridRow } from "../../components/Containers"
 
 const BannerImg = styled.img`
   border-radius: 0 0 12px 12px;
@@ -28,4 +29,33 @@ export const Banner = () => (
       <img src={Logo} alt="What's Cooking" style={{height: '100%', width: '100%'}} />
     </LogoContainer>
   </BannerContainer>
+)
+
+const tutorialData = [
+  {text: 'Sign Up as a member!'},
+  {text: 'Customise your profile and add your next meal to the planner!'},
+  {text: 'Add your own recipes and reviews!'},
+  {text: 'Follow along with our ingredient checklist and recipe!'},
+]
+
+const StepDisplay = styled(Col)`
+  background-color: #FFB800;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+`
+
+export const TutorialRow = () => (
+  <GridRow flexed gap={'30px'} className="how-container">
+    {tutorialData.map((item, index) => (
+      <Col hCenter>
+        <StepDisplay>
+          <h4>{index + 1}</h4>
+        </StepDisplay>
+        <p className="how-text">{item.text}</p>
+      </Col>
+    ))}
+  </GridRow>
 )

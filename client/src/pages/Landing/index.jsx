@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Buttons/index";
 import Card from "../../components/Cards";
-import { Section } from "../../components/Containers";
-import { Banner } from "./components";
+import { Container, Section } from "../../components/Containers";
+import { Banner, TutorialRow } from "./components";
 import Footer from "../../components/Footer";
 
 const Landing = () => {
@@ -37,63 +37,44 @@ const Landing = () => {
         </Section>
 
         <Section>
-          <h3 className="how">How it works</h3>
-          <div className="how-container">
-            <div className="bar-container">
-              <div className="child">1</div>
-              <p className="how-text">Sign Up as a member!</p>
-            </div>
-
-            <div className="bar-container">
-              <div className="child">2</div>
-              <p className="how-text">
-                Customise your profile and add your next meal to the planner!
-              </p>
-            </div>
-
-            <div className="bar-container">
-              <div className="child">3</div>
-              <p className="how-text">Add your own recipes and reviews!</p>
-            </div>
-
-            <div className="bar-container">
-              <div className="child">4</div>
-              <p className="how-text">
-                Follow along with our ingredient checklist and recipe!
-              </p>
-            </div>
-          </div>
-
+        <Container style={{width: '100%'}}>
+          <h3 style={{marginBottom: 24, textAlign: 'left'}}>How it works</h3>
+          <TutorialRow  />
           <div className="bar-container" style={{ margin: "0px" }}></div>
+          </Container>
         </Section>
-        <h3 style={{ textAlign: "left" }}>Meals</h3>
-        <div className="container" style={{paddingBottom: '-12px', justifyContent: 'center'}}>
-          {card?.map((item, index) => {
-            return (<>
-              {index < 5 && (
-                <Card.Recipe
-                  id={item._id}
-                  image={item.picture.avatar}
-                  name={item.name}
-                  time={item.time}
-                  style={{margin: '6px 12px', marginTop: 0}}
-                />
-              )}
-            </>);
-          })}
-        </div>
-        <Link to={`/meals`}>
-          <Button.Ghost
-            style={{
-              borderRadius: "5px",
-              padding: "10px 30px 10px 30px",
-              marginTop: "30px",
-              marginBottom: "100px",
-            }}
-          >
-            See More
-          </Button.Ghost>
-        </Link>
+
+        <Section>
+          <Container style={{width: '100%'}}>
+          <h3 style={{ textAlign: "left" }}>Meals</h3>
+          <div className="container" style={{paddingBottom: '-12px'}}>
+            {card?.map((item, index) => {
+              return (<>
+                {index < 5 && (
+                  <Card.Recipe
+                    id={item._id}
+                    image={item.picture.avatar}
+                    name={item.name}
+                    time={item.time}
+                    style={{margin: '6px 12px', marginTop: 0}}
+                  />
+                )}
+              </>);
+            })}
+          </div>
+          <Link to={`/meals`}>
+            <Button.Ghost
+              style={{
+                borderRadius: "5px",
+                padding: "10px 30px 10px 30px",
+                marginTop: "30px",
+              }}
+            >
+              See More
+            </Button.Ghost>
+          </Link>
+          </Container>
+        </Section>
 
         <Section className="bottom-signup" last>
           <h3 style={{ margin: 0, marginBottom: 10 }}>
