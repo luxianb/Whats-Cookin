@@ -22,6 +22,9 @@ export const CardPortalBase = styled(containerBase)`
 export const CardBase = styled(containerBase)`
   background-color: white;
   box-shadow: 0 0 15px rgba(0,0,0,.15);
+  :hover {
+    box-shadow: 0 0 12px rgba(0,0,0,.2);
+  }
 `;
 
 const imageBase = styled.div`
@@ -65,6 +68,7 @@ export const CardImage = (props) => (
 export const CardContent = styled(Col)`
   padding: 12px;
   padding-top: 0;
+  text-align: left;
 `;
 
 export const CardButtonRow = styled.div`
