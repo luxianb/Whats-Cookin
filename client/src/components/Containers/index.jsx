@@ -44,6 +44,8 @@ export const Section = styled.div`
   flex-direction: column;
   position: relative;
   padding: 4rem;
+  padding-top: ${prop => prop.first ? '8rem' : '4rem'};
+  padding-bottom: ${prop => prop.last ? '8rem' : '4rem'};
   width: 100%;
   align-items: center;
   box-sizing: border-box;
