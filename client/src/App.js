@@ -10,6 +10,9 @@ import SignUp from "./pages/SignUp";
 import UserProfile from "./pages/UserProfile";
 import RecipePage from "./pages/Recipe";
 import DisplayMeals from "./pages/DisplayMeals";
+import MealPlan from "./pages/MealPlan";
+import StepsIndex from "./pages/MealPlan/Steps";
+import CreateReview from "./pages/MealPlan/Review";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -22,7 +25,7 @@ function App() {
     }
     fetchRecipeData();
   }, []);
-  
+
   return (
     <div style={{ backgroundColor: "white" }}>
       <NavigationBar userData={userData} />
@@ -39,9 +42,21 @@ function App() {
           <LogIn onLoginSuccess={(userInfo) => setUserData(userInfo)} />
         </Route>
 
-        <Route path='/signup' component={SignUp}/>
-        <Route path='/profile/:userId' component={UserProfile}/>
-        <Route path='/recipe/:recipeId' component={RecipePage}/>
+        <Route path="/signup" component={SignUp} />
+        <Route path="/profile/:userId" component={UserProfile} />
+        <Route path="/recipe/:recipeId" component={RecipePage} />
+
+        <Route path="/planner/:recipeId/review">
+          <CreateReview/>
+        </Route>
+
+        <Route path="/planner/:recipeId/steps">
+          <StepsIndex/>
+        </Route>
+
+        <Route path="/planner/:recipeId/">
+          <MealPlan/>
+        </Route>
       </Switch>
     </div>
   );

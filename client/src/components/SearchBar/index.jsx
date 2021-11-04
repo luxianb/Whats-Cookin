@@ -30,7 +30,6 @@ function SearchBar(props) {
   });
   useEffect(() => {
     props.setFilteredMeal(filteredData);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
   return (

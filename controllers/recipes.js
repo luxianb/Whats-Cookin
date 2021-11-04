@@ -11,7 +11,7 @@ router.get("/seed", async (req, res) => {
   await Recipe.deleteMany({});
 
   const eggsBenedict = new Recipe({
-    name: "Eggs Benedict",
+    name: "SEED Eggs Benedict",
     description: "The no. 1 Breakfast Egg",
     // user: '6180ee47bf1a21093c8101b0',
     tags: ["Beginner", "Egg"],
@@ -32,11 +32,12 @@ router.get("/seed", async (req, res) => {
         body: "Bring a large saucepan two-thirds-filled with water to a boil, then add the vinegar. Bring the water to a boil again, then lower the heat to a bare simmer.",
       },
     ],
+    owner: "618295b296dd9e83f3b22b1e",
   });
   await eggsBenedict.save();
 
   const chickenRice = new Recipe({
-    name: "Chicken Rice",
+    name: "SEED Chicken Rice",
     description: "The only rice you need",
     tags: ["Beginner", "Chicken", "Asian Cuisine"],
     // user: '6180ee47bf1a21093c8101b0',
@@ -57,11 +58,12 @@ router.get("/seed", async (req, res) => {
       },
       { title: "Steam chicken", body: "Season chicken with salt and steam" },
     ],
+    owner: "618295b296dd9e83f3b22b1e",
   });
   await chickenRice.save();
 
   const pasta = new Recipe({
-    name: "Bolognese Pasta",
+    name: "SEED Bolognese Pasta",
     description: "All day errday",
     tags: ["Beginner", "Pasta"],
     time: { hour: 1, minutes: 30 },
@@ -81,6 +83,7 @@ router.get("/seed", async (req, res) => {
         body: "Cook the meat slightly before adding tomato paste, water and a pinch of salt",
       },
     ],
+    owner: "618295b296dd9e83f3b22b1e",
   });
   await pasta.save();
   res.send([eggsBenedict, chickenRice, pasta]);
