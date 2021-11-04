@@ -1,5 +1,5 @@
 const express = require('express');
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const Users = require("../models/users")
 
 const router = express.Router();
@@ -16,15 +16,15 @@ router.post('/', async (req, res) => {
     const userFound = await Users.findOne({email: req.body.email})
     console.log('userInfo',userFound);
     if (!userFound) {
-      return
+      return res.json("Unable to find user, make sure you typed in the right email")
     }
-    const passwordMatched = await bcryptjs.compare(req.body.password, userFound.password);
+    const passwordMatched = await bcrypt.compare(req.body.password, userFound.password);
     if(!passwordMatched) {
-      return
+      return res.json("Unable to log in, incorrect password")
     }
 
     req.session.loggedUser = userFound
-    res.json("Login Successful")
+    res.json(userFound)
 
   } catch (err) {
     console.log(err)

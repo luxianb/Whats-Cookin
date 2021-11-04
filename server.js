@@ -4,24 +4,22 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 
-//*CONFIGURATION
+//* CONFIGURATION
 require("dotenv").config();
 const app = express();
-const port = 4000;
-// const port = process.env.PORT ?? 3002;
-// mongoose.connect(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/whatsCookin')
-// mongoose.connection.on("open", () => {
-//   console.log(`Connection to MongoDB ${process.env.MONGODB_URI ? "Atlas" : ""} is open`)
-// })
-
+const port = process.env.PORT ?? 3002;
 mongoose.connect(
-  "mongodb+srv://afaris:afaris2127@firstcluster.r8zxu.mongodb.net/whatscookin?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-  }
+  process.env.MONGODB_URI ?? "mongodb://localhost:27017/whatsCookin"
 );
+mongoose.connection.on("open", () => {
+  console.log(
+    `Connection to MongoDB ${process.env.MONGODB_URI ? "Atlas" : ""} is open`
+  );
+});
 
-// Middleware
+//* Middleware
+const path = require('path');
+app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.json());
 app.use(cors())
 app.use(
@@ -32,7 +30,7 @@ app.use(
   })
 );
 
-// Routes
+//* Routes
 // * User Routes
 const sessionController = require("./controllers/session_controller");
 app.use("/api/session", sessionController);
@@ -51,11 +49,29 @@ app.use("/api/mealPlan", mealPlanController);
 const reviewsController = require("./controllers/reviews");
 app.use("/api/reviews", reviewsController);
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+//* image routes
+const imageController = require("./controllers/image");
+app.use("/api/image", imageController);
 
-// Listener
+app.get("/*", (req, res) => {
+      res.sendFile(path.join(__dirname, "./client/build", "index.html"));
+    });
+
+//* Listener
 app.listen(port, () => {
   console.log(`Express server is live at ${port}`);
 });
+
+
+
+
+
+// const app = express();
+// const port = 4000;
+
+// mongoose.connect(
+//   "mongodb+srv://afaris:afaris2127@firstcluster.r8zxu.mongodb.net/whatscookin?retryWrites=true&w=majority",
+//   {
+//     useNewUrlParser: true,
+//   }
+// );
