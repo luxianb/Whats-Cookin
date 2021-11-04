@@ -103,7 +103,7 @@ export default function RecipePage(props) {
       <Section>
         <Container>
           <GridRow colTemplate={"1fr 1fr"} gap="24px">
-            <Image.Recipe src={recipe?.picture} />
+            <Image.Recipe src={recipe?.picture?.avatar} />
             <Col>
               <h1>{recipe?.name}</h1>
               <GridRow>
@@ -113,7 +113,7 @@ export default function RecipePage(props) {
               <p>{recipe?.description}</p>
               <GridRow>
                 <AddToPlannerButton />
-                {loggedUser && recipe.user === loggedUser?._id && (
+                {loggedUser && recipe.owner === loggedUser?._id && (
                   <EditButton />
                   )}
               </GridRow>

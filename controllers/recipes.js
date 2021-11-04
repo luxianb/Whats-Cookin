@@ -94,7 +94,7 @@ router.get("/", async (req, res) => {
 
 //? Index (UserId)
 router.get("/user/:userId", async (req, res) => {
-  const recipies = await Recipe.find({user: req.params.userId});
+  const recipies = await Recipe.find({owner: req.params.userId});
   res.json(recipies);
 });
 
