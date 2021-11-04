@@ -53,9 +53,9 @@ const Landing = () => {
                 {index < 5 && (
                   <Card.Recipe
                     id={item._id}
-                    image={item.picture.avatar}
-                    name={item.name}
-                    time={item.time}
+                    image={item?.picture?.avatar}
+                    name={item?.name}
+                    time={item?.time}
                     style={{margin: '6px 12px', marginTop: 0}}
                   />
                 )}

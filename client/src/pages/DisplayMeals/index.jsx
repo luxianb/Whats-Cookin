@@ -17,7 +17,7 @@ const DisplayMeals = (props) => {
             return (
               <Card.Recipe
                 id={item._id}
-                image={item.picture.avatar}
+                image={item?.picture?.avatar}
                 name={item.name}
                 time={item.time}
                 style={{margin: '6px 12px', marginTop: 0}}
