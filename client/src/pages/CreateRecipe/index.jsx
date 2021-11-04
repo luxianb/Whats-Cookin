@@ -58,9 +58,6 @@ const CreateRecipe = () => {
         console.log(form)
         
         const postRecipe = async (data) => {
-            // const sendData = {
-            //     ...form, time: { hour: form.hour, minutes: form.minutes }
-            // }
             const res = await fetch(URL, {
                 method: "POST",
                 headers: {
