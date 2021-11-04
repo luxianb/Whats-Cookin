@@ -101,7 +101,7 @@ export default function RecipePage(props) {
       {/* Main info display */}
       <Section first>
         <Container>
-          <GridRow colTemplate={"1fr 1fr"} gap="24px">
+          <GridRow colTemplate={"auto 500px"} gap="24px" style={{justifyItems: "center"}}>
             <Image.Recipe src={recipe?.picture?.avatar} />
             <Col>
               <h1>{recipe?.name}</h1>
@@ -109,7 +109,7 @@ export default function RecipePage(props) {
                   {reviews.length > 0 && (<RatingIndicator rating={reviewAvg}/>)}
                 <Chip.EstTime time={recipe?.time} />
               </GridRow>
-              <p>{recipe?.description}</p>
+              <p style={{wordWrap: 'normal'}}>{recipe?.description}</p>
               <GridRow>
                 <AddToPlannerButton />
                 {loggedUser && recipe.owner === loggedUser?._id && (
