@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 
 const StepsIndex = () => {
   const params = useParams();
-  const id = params?.recipeId;
+  const mealPlanId = params?.mealPlanId;
   const location = useLocation();
   const steps = location?.state?.data?.mealPlanData?.recipe?.steps;
+  const recipeId = location?.state?.data?.mealPlanData?.recipe?._id
+  console.log("PARAMS STEPS", recipeId)
 
   return (
     <Container
@@ -26,7 +28,7 @@ const StepsIndex = () => {
       <div>
         {steps?.map((item) => {
           return (
-            <ul>
+            <ul key={item?._id}>
               <li>
                 <h3>{item?.title}</h3>
               </li>
@@ -36,7 +38,7 @@ const StepsIndex = () => {
         })}
         <Link
           to={{
-            pathname: `/planner/${id}/review`,
+            pathname: `/planner/review/${recipeId}`,
             state: { data: { location } },
           }}
         >

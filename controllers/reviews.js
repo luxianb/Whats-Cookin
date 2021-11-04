@@ -22,7 +22,7 @@ router.get('/:recipeId', async(req, res) => {
 // Post user review
 router.post('/:recipeId', async(req, res) => {
   req.body.recipe = req.params.recipeId;
-  req.body.user = req.session.loggedUser._id;
+  req.body.user = req.session.loggedUser?._id;
   
   const newReview = await Reviews.create(req.body)
   

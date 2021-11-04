@@ -7,16 +7,16 @@ import axios from "axios";
 
 const MealPlan = () => {
   const params = useParams();
-  const id = params?.recipeId;
+  const mealPlanId = params?.mealPlanId;
 
   const [mealPlanData, setMealPlanData] = useState();
   useEffect(() => {
     async function fetchMealPlanData() {
-      const res = await axios.get(`/api/mealPlan/${id}`);
+      const res = await axios.get(`/api/mealPlan/${mealPlanId}`);
       setMealPlanData(res.data);
     }
     fetchMealPlanData();
-  }, [id]);
+  }, [mealPlanId]);
 
   const shoppingList = mealPlanData?.shoppingList;
   const picture = mealPlanData?.recipe?.picture?.avatar;
@@ -59,7 +59,7 @@ const MealPlan = () => {
         </div>
         <Link
           to={{
-            pathname: `/planner/${id}/steps`,
+            pathname: `/planner/${mealPlanId}/steps`,
             state: { data: { mealPlanData } },
           }}
         >
