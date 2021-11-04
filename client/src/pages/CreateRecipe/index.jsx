@@ -1,184 +1,382 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { Col, Row } from '../../components/Containers/index'
-import Axios from 'axios'
-// import Button from "../../components/Buttons/index"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useHistory } from 'react-router';
+
+import Button, { BackButton } from "../../components/Buttons";
+import { Col, Container, GridRow, Page, Row, Section } from '../../components/Containers/index';
+import ErrorPrompt from "../../components/ErrorPrompt";
+import Input, { TextArea } from "../../components/Inputs";
+import ImageInput from "../../components/Inputs/ImageInput";
+import TagsInput from "../../components/Inputs/TagsInput";
+import LoginRequiredModal from "../../components/Modals/LoginRequired";
+import { DeleteButton, StepDeleteButton } from "./components";
+
+class Ingredient {
+	constructor(amount, unit, name) {
+		this.amount = amount || '';
+		this.unit = unit || '';
+		this.name = name || '';
+	}
+}
+class Step {
+	constructor(title, body) {
+		this.title = title || '';
+		this.body = body || '';
+	}
+}
 
 const CreateRecipe = () => {
-    
-    const URL = "http://localhost:4000/api/recipes/new"
-    const [form, setForm] = useState({
-        name: String,
-        description: String,
-        tags: Array,
-        hours: Number, 
-        minutes: Number,
-        amount: Number,
-        unit: String,
-        ingridients: String,
-        title: String,
-        body: String
-    });
-    console.log(form)
-    
-    const handleChange = (e) => {
-        const { name, description, tags, hours, minutes, amount, unit, ingridients, title, body } = e.target;
-        setForm({
-            ...form,
-            [name]: e.target.value,
-            [description]: e.target.value,
-            [tags]: e.target.value,
-            [hours]: e.target.value,
-            [minutes]: e.target.value,
-            [amount]: e.target.value,
-            [unit]: e.target.value,
-            [ingridients]: e.target.value,
-            [title]: e.target.value,
-            [body]: e.target.value
-        });
-    };
-    
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setForm({ 
-            name: String, 
-            description: String, 
-            tags: Array,
-            hours: Number, 
-            minutes: Number, 
-            unit: String,
-            amount: Number,
-            ingridients: Array, 
-            title: String, 
-            body: String
-        });
-            postRecipe(form);
-     };
-        console.log(form)
-        
-        const postRecipe = async (data) => {
-            const res = await fetch(URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "name": `${form.name}`,
-                    "description": `${form.description}`,
-                    "tags": [`${form.tags}`],
-                    "type": "Lunch",
-                    "time": {"hour": `${form.hours}`, "minutes": `${form.minutes}`},
-                    "ingredients": [{"amount": `${form.amount}`, "unit": `${form.unit}`, "name": `${form.ingridients}`}],
-                    "picture": {"avatar": "https://media-cdn.tripadvisor.com/media/photo-m/1280/14/ab/bf/5e/eggs-ben-with-bacon-delicious.jpg", "cloudinary_id": ""},
-                    "steps": [{"title": `${form.title}`, "body": `${form.body}`}]
-                }),
-              });
-           };
-        
-        return (
-            <div>
-            
-          <h1>Add a Recipe</h1>
-          <Row>
-          <Col>
-            <form onSubmit={(e) => handleSubmit(e)}>
-             <input
-              onChange={(e) => handleChange(e)} 
-              value={form.name} 
-              type="text" 
-              name="name" 
-              className="input-text-normal" 
-              placeholder="Meal Name"
-             />
-             <input 
-              onChange={(e) => handleChange(e)} 
-              value={form.description} 
-              type="text" 
-              name="description"
-              className="input-text-large" 
-              placeholder="Description"
-             />
-             <input 
-              onChange={(e) => handleChange(e)} 
-              value={form.tags} 
-              type="text" 
-              name="tags" 
-              className="input-text-normal" 
-              placeholder="Tags"
-             />
-             <h4>Est. Time to cook</h4>
-            <Row>
-             <input 
-             onChange={(e) => handleChange(e)} 
-             value={form.hours} 
-             type="number" 
-             name="hours" 
-             className="input-text-normal" 
-             placeholder="Hours"
-             />
-             <input 
-             onChange={(e) => handleChange(e)} 
-             value={form.minutes} 
-             type="number" 
-             name="minutes" 
-             className="input-text-normal" 
-             placeholder="Minutes"
-             />
-            </Row>
-             <h3>Ingridients</h3>
-            <Row>
-             <input 
-             onChange={(e) => handleChange(e)} 
-             value={form.amount} 
-             type="number" 
-             name="amount" 
-             className="input-text-normal" 
-             placeholder="Amount"
-             />
-             <input onChange={(e) => handleChange(e)} 
-             value={form.unit} 
-             type="text" 
-             name="unit" 
-             className="input-text-normal" 
-             placeholder="Unit"
-             />
-             <input 
-             onChange={(e) => handleChange(e)} 
-             value={form.ingridients} 
-             type="text" 
-             name="ingridients" 
-             className="input-text-normal" 
-             placeholder="Ingridients"
-             />
-            </Row>
-            <div>add fields</div>
-             <h3>Steps</h3>
-             <input 
-             onChange={(e) => handleChange(e)} 
-             value={form.title} 
-             type="text" 
-             name="title" 
-             className="input-text-normal" 
-             placeholder="Step Tittle"
-             />
-             <input 
-             onChange={(e) => handleChange(e)} 
-             value={form.body} 
-             type="text" 
-             name="body" 
-             className="input-text-normal" 
-             placeholder="Step Instructions"
-             />
-             <button>Submit</button>
-            </form>
-          </Col>
-          <Col>
-            {/* <input type="text" id="fname" name="fname" placeholder="Hours"/> */}
-          </Col>
-          </Row>
-        </div>
-    )
+	const [errors, setErrors] = useState({ name: '', description: '', time: '', ingredients: [], steps: [] })
+	const [ingredients, setIngredients] = useState([new Ingredient()])
+	const [steps, setSteps] = useState([new Step()])
+	const [loggedUser, setLoggedUser] = useState(null);
+	const [modal, setModal] = useState('')
+	const history = useHistory()
+
+	useEffect(() => {
+		async function fetchUserInfo() {
+			const res = await axios.get('/api/session');
+			setLoggedUser(res.data);
+		}
+		fetchUserInfo();
+	}, [])
+
+
+	const URL = "http://localhost:4000/api/recipes/new"
+	const [form, setForm] = useState({
+		name: '',
+		description: '',
+		tags: [],
+		time: {hours: '', minutes: ''},
+		avatar: null,
+	});
+
+	const handleChange = (e) => {
+		const { name } = e.target;
+		setForm({ ...form, [name]: e.target.value });
+	};
+
+	function handleIngredientChange(e, index) {
+		const { value, name } = e.currentTarget
+		const editedObject = { ...ingredients[index], [name]: value }
+
+		const array = [...ingredients]
+		array.splice(index, 1, editedObject)
+
+		for (let i = array.length - 1; i >= 0; i--) {
+			if (i !== index && array[i].amount === '' && array[i].unit === '' && array[i].name === '') {
+				array.splice(i, 1);
+			}
+		}
+
+		setIngredients(array)
+	}
+
+	function handleRemoveIngredient(index) {
+		const array = [...ingredients]
+		array.splice(index, 1)
+		setIngredients(array)
+	}
+
+	function addNewIngredientField() {
+		setIngredients([...ingredients, new Ingredient('')]);
+	}
+
+	function handleStepChange(e, index) {
+		const { value, name } = e.currentTarget
+		const editedObject = { ...steps[index], [name]: value }
+
+		const array = [...steps]
+		array.splice(index, 1, editedObject)
+
+		for (let i = array.length - 1; i >= 0; i--) {
+			if (i !== index && array[i].title === '' && array[i].body === '') {
+				array.splice(i, 1);
+			}
+		}
+
+		setSteps(array)
+	}
+
+	function addNewStepField() {
+		setSteps([...steps, new Step('')]);
+	}
+
+	function handleRemoveStep(index) {
+		const array = [...steps]
+		array.splice(index, 1)
+		setSteps(array)
+	}
+
+	function checkForm() {
+		if (!loggedUser) {
+			return setModal('reqLogin')
+		}
+		const errors = {name: '', description: '', time: '', ingredients: [], steps: []}
+
+		if (!form.name) {
+			errors.name = "Include the name of your recipe"
+		}
+
+		if (!form.description) {
+			errors.description = "The description of your recipe"
+		}
+
+		if (!form.time.hours && !form.time.minutes) {
+			errors.time = "Include an estimate cooking time"
+		}
+
+		for (let i = 0; i < ingredients.length; i++) {
+			if (!ingredients[i].amount || !ingredients[i].name) {
+				errors.ingredients.push('Include an amount and ingredient name')
+			} else {
+				errors.ingredients.push(null)
+			}
+		}
+
+		for (let i = 0; i < steps.length; i++) {
+			if (!steps[i].title || !steps[i].body) {
+				errors.steps.push('Include a title and description for your step')
+			} else {
+				errors.steps.push(null)
+			}
+		}
+		setErrors(errors);
+
+		if (
+			!errors.name &&
+			!errors.description &&
+			!errors.time &&
+			errors.ingredients.filter((each) => each !== null).length === 0 &&
+			errors.steps.filter((each) => each !== null).length === 0)
+		{
+			postRecipe()
+		}
+	}
+
+
+	const postRecipe = async (data) => {
+		// const postForm = JSON.stringify({...form, steps, ingredients});
+		const formData = new FormData();
+
+		// for (const field in postForm) {
+			formData.append('avatar', form.avatar)
+			formData.append('name', form.name)
+			formData.append('description', form.description)
+			formData.append('time', JSON.stringify(form.time))
+			formData.append('steps', JSON.stringify(steps))
+			formData.append('ingredients', JSON.stringify(ingredients))
+		// }
+
+		
+		const res = await axios.post('/api/recipes/new', formData, {
+			headers: {
+				 'Content-Type': 'multipart/form-data'
+			}
+	 });
+
+		if (typeof res.data === 'object') {
+			history.push(`/profile/${loggedUser._id}?display=recipes`)
+		}
+
+	};
+
+	return (
+		<>
+		<Page>
+			<Section>
+				<Container>
+					<GridRow gap={"36px"}>
+						<Col>
+
+							<GridRow style={{ marginBottom: 36 }}>
+								<BackButton />
+								<h1 style={{ margin: 0 }}>Add a Recipe</h1>
+							</GridRow>
+
+							<Col style={{ marginBottom: 12 }}>
+								<Input
+									onChange={(e) => handleChange(e)}
+									value={form.name}
+									type="text"
+									name="name"
+									placeholder="Meal Name"
+									error={errors.name}
+								/>
+								{errors.name && <ErrorPrompt>{errors.name}</ErrorPrompt>}
+							</Col>
+
+							<Col style={{ marginBottom: 18 }}>
+								<TextArea
+									onChange={(e) => handleChange(e)}
+									value={form.description}
+									type="text"
+									name="description"
+									placeholder="Description"
+									style={{ minHeight: '8rem' }}
+									error={errors.description}
+								/>
+								{errors.description && <ErrorPrompt>{errors.description}</ErrorPrompt>}
+							</Col>
+
+							<TagsInput
+								onChange={(data) => setForm({ ...form, tags: data })}
+								value={form.tags}
+								style={{ marginBottom: 18 }}
+							/>
+
+							<Col style={{ marginBottom: 18 }}>
+								<GridRow style={{ alignItems: 'center', fontSize: '.9rem' }} gap={'6px'}>
+									<p style={{ margin: 0 }}>Est. Time to cook</p>
+									<Row vCenter>
+										<Input
+											onChange={(e) => setForm({...form, time: {...form.time, hours: e.target.value}})}
+											value={form.time.hours}
+											type="number"
+											name="hours"
+											placeholder="0"
+											style={{ width: '4rem' }}
+											min={1}
+											max={24}
+											error={errors.time}
+										/>
+										<p style={{ margin: 0 }}>hr </p>
+									</Row>
+									<Row vCenter>
+										<Input
+											onChange={(e) => setForm({...form, time: {...form.time, minutes: e.target.value}})}
+											value={form.minutes}
+											type="number"
+											name="minutes"
+											placeholder="00"
+											style={{ width: '4rem' }}
+											min={1}
+											max={59}
+											error={errors.time}
+										/>
+										<p style={{ margin: 0 }}>mins</p>
+									</Row>
+								</GridRow>
+								{errors.time && <ErrorPrompt>{errors.time}</ErrorPrompt>}
+							</Col>
+
+							<h2 style={{ marginBottom: 12 }}>Ingredients</h2>
+							<Col style={{ marginBottom: '-6px' }}>
+								{ingredients.map((ingredient, index) => (
+									<Col key={`ing${index}`} style={{ marginBottom: 6 }}>
+										<GridRow key={index} colTemplate={'8rem 4rem 1fr'} gap={'6px'} style={{ position: 'relative' }}>
+											{index !== 0 && (<DeleteButton onClick={() => handleRemoveIngredient(index)} />)}
+											<Input
+												type="number"
+												name='amount'
+												placeholder="amount"
+												value={ingredient.amount}
+												onChange={(e) => handleIngredientChange(e, index)}
+												min={0}
+												error={errors?.ingredients[index]}
+											/>
+											<Input
+												type="text"
+												name='unit'
+												placeholder="unit"
+												value={ingredient.unit}
+												onChange={(e) => handleIngredientChange(e, index)}
+												error={errors?.ingredients[index]}
+											/>
+											<Input
+												type="text"
+												name='name'
+												placeholder="name"
+												value={ingredient.name}
+												onChange={(e) => handleIngredientChange(e, index)}
+												error={errors?.ingredients[index]}
+											/>
+										</GridRow>
+										{errors?.ingredients[index] && <ErrorPrompt>{errors?.ingredients[index]}</ErrorPrompt>}
+									</Col>
+								))}
+								<Button.Ghost
+									onClick={() => addNewIngredientField()}
+									color={'#c4c4c4'}
+									style={{ borderStyle: 'dashed', marginTop: 12 }}
+									rounded
+								>
+									Add field +
+								</Button.Ghost>
+							</Col>
+
+							<h2 style={{ marginBottom: 12 }}>Steps</h2>
+							<Col style={{ marginBottom: '-12px' }}>
+								{steps.map((step, index) => (
+									<Col key={`stp${index}`} style={{ marginBottom: 12 }}>
+										<Row style={{ justifyContent: 'space-between', marginBottom: 6 }}>
+											<h3 style={{ margin: 0 }}>Step {index + 1}</h3>
+											{index !== 0 && (
+												<StepDeleteButton onClick={() => handleRemoveStep(index)} />
+											)}
+										</Row>
+										<Input
+											type="text"
+											name='title'
+											placeholder="Step Title"
+											value={step.title}
+											onChange={(e) => handleStepChange(e, index)}
+											style={{ borderRadius: "6px 6px 0 0" }}
+											error={errors?.steps[index]}
+										/>
+										<TextArea
+											type="text"
+											name='body'
+											placeholder="Step Description"
+											value={step.body}
+											onChange={(e) => handleStepChange(e, index)}
+											style={{ borderRadius: "0 0 6px 6px", borderTop: 0, minHeight: '6rem' }}
+											error={errors?.steps[index]}
+										/>
+										{errors?.steps[index] && <ErrorPrompt>{errors?.steps[index]}</ErrorPrompt>}
+									</Col>
+								))}
+							</Col>
+							<Button.Ghost
+								onClick={() => addNewStepField()}
+								color={'#c4c4c4'}
+								style={{ borderStyle: 'dashed', marginTop: 12 }}
+								rounded
+							>
+								Add field +
+							</Button.Ghost>
+						</Col>
+						
+						<ImageInput
+							onChange={(file) => setForm({...form, avatar: file})}
+							height={'600px'}
+							width={'400px'}
+							borderRadius={'12px'}
+						/>
+
+					</GridRow>
+					<Button.Primary
+						color={"#FFB800"}
+						style={{ width: 300, marginTop: 24, alignSelf: 'center', fontSize: '1rem' }}
+						onClick={checkForm}
+					>
+						Submit
+					</Button.Primary>
+				</Container>
+			</Section>
+		</Page>
+		{modal && (
+				<>
+					{modal === 'reqLogin' && (
+						<LoginRequiredModal 
+							closeModal={() => setModal('')}
+						/>
+					)}
+				</>
+			)}
+		</>
+	)
 }
 
 export default CreateRecipe
