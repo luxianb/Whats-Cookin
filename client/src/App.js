@@ -46,16 +46,16 @@ function App() {
         <Route path="/profile/:userId" component={UserProfile} />
         <Route path="/recipe/:recipeId" component={RecipePage} />
 
-        <Route path="/planner/:recipeId/review">
-          <CreateReview/>
+        <Route path="/planner/review/:recipeId">
+          <CreateReview />
         </Route>
 
-        <Route path="/planner/:recipeId/steps">
-          <StepsIndex/>
+        <Route path="/planner/:mealPlanId/steps">
+          <StepsIndex />
         </Route>
 
-        <Route path="/planner/:recipeId/">
-          <MealPlan/>
+        <Route path="/planner/:mealPlanId/">
+          <MealPlan />
         </Route>
       </Switch>
     </div>

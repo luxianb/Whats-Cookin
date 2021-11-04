@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 export default function MealPlanReviewInput() {
   const [form, setForm] = useState({ title: "", rating: 1, comment: "" });
   const params = useParams();
-  console.log("REVIEW INPUT PARAMS", params);
-  const id = params?.recipeId;
+  const recipeId = params?.recipeId;
 
   function handleChange(e) {
     const { name, value } = e.currentTarget;
@@ -18,8 +17,8 @@ export default function MealPlanReviewInput() {
   }
 
   function handleSubmit() {
-    // ! pass recipe id here
-    axios.post(`/api/reviews/${id}`, form).then((res) => {
+    // ! pass recipe recipeId here
+    axios.post(`/api/reviews/${recipeId}`, form).then((res) => {
       console.log(res.data);
     });
   }
