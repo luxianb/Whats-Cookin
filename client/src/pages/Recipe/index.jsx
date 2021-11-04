@@ -89,7 +89,7 @@ export default function RecipePage(props) {
   )}
 
   const EditButton = () => (
-    <Button.Ghost color={'black'}>
+    <Button.Ghost color={'black'} onClick={() => history.push(`/edit/${params.recipeId}`)}>
       Edit
     </Button.Ghost>
   )

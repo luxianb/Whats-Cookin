@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 import Button, { BackButton } from "../../components/Buttons";
 import { Col, Container, GridRow, Page, Row, Section } from '../../components/Containers/index';
@@ -26,13 +27,14 @@ class Step {
 	}
 }
 
-const CreateRecipe = () => {
+const CreateRecipe = (props) => {
 	const [errors, setErrors] = useState({ name: '', description: '', time: '', ingredients: [], steps: [] })
 	const [ingredients, setIngredients] = useState([new Ingredient()])
 	const [steps, setSteps] = useState([new Step()])
 	const [loggedUser, setLoggedUser] = useState(null);
 	const [modal, setModal] = useState('')
 	const history = useHistory()
+	const params = useParams()
 
 	useEffect(() => {
 		async function fetchUserInfo() {
@@ -40,10 +42,23 @@ const CreateRecipe = () => {
 			setLoggedUser(res.data);
 		}
 		fetchUserInfo();
+
+		if (props.mode === "edit") {
+			async function fetchRecipeInfo() {
+				const res = await axios.get(`/api/recipes/${params.recipeId}`)
+
+				console.log(res.data)
+
+				setForm({name : res.data.name, description: res.data.description, tags: res.data.tags, time: {hour: res.data.time?.hour || '', minutes: res.data.time?.minutes || ''}, avatar: res.data?.picture?.avatar});
+				setSteps(res.data.steps)
+				setIngredients(res.data.ingredients)
+			}
+			fetchRecipeInfo()
+		}
+
 	}, [])
 
 
-	const URL = "http://localhost:4000/api/recipes/new"
 	const [form, setForm] = useState({
 		name: '',
 		description: '',
@@ -157,27 +172,32 @@ const CreateRecipe = () => {
 
 
 	const postRecipe = async (data) => {
-		// const postForm = JSON.stringify({...form, steps, ingredients});
 		const formData = new FormData();
-
-		// for (const field in postForm) {
+		if (typeof form.avatar !== 'string') {
 			formData.append('avatar', form.avatar)
-			formData.append('name', form.name)
-			formData.append('description', form.description)
-			formData.append('time', JSON.stringify(form.time))
-			formData.append('steps', JSON.stringify(steps))
-			formData.append('ingredients', JSON.stringify(ingredients))
-		// }
+		}
+		formData.append('name', form.name)
+		formData.append('description', form.description)
+		formData.append('tags', JSON.stringify(form.tags))
+		formData.append('time', JSON.stringify(form.time))
+		formData.append('steps', JSON.stringify(steps))
+		formData.append('ingredients', JSON.stringify(ingredients))
 
-		
-		const res = await axios.post('/api/recipes/new', formData, {
-			headers: {
-				 'Content-Type': 'multipart/form-data'
+		if (props.mode === 'edit') {
+			const res = await axios.put(`/api/recipes/${params.recipeId}/edit`, formData);
+			if (typeof res.data === 'object') {
+				history.push(`/profile/${loggedUser._id}?display=recipes`)
 			}
-	 });
-
-		if (typeof res.data === 'object') {
-			history.push(`/profile/${loggedUser._id}?display=recipes`)
+		} else {
+			const res = await axios.post('/api/recipes/new', formData, {
+				headers: {
+					 'Content-Type': 'multipart/form-data'
+				}
+		 });
+	
+			if (typeof res.data === 'object') {
+				history.push(`/profile/${loggedUser._id}?display=recipes`)
+			}
 		}
 
 	};
@@ -192,7 +212,8 @@ const CreateRecipe = () => {
 
 							<GridRow style={{ marginBottom: 36 }}>
 								<BackButton />
-								<h1 style={{ margin: 0 }}>Add a Recipe</h1>
+								<h1 style={{ margin: 0 }}> {props.mode !== 'edit' ? " Add a Recipe" : "Edit Recipe"}
+								</h1>
 							</GridRow>
 
 							<Col style={{ marginBottom: 12 }}>
@@ -232,9 +253,9 @@ const CreateRecipe = () => {
 									<Row vCenter>
 										<Input
 											onChange={(e) => setForm({...form, time: {...form.time, hour: e.target.value}})}
-											value={form.time.hours}
+											value={form.time.hour}
 											type="number"
-											name="hours"
+											name="hour"
 											placeholder="0"
 											style={{ width: '4rem' }}
 											min={1}
@@ -246,7 +267,7 @@ const CreateRecipe = () => {
 									<Row vCenter>
 										<Input
 											onChange={(e) => setForm({...form, time: {...form.time, minutes: e.target.value}})}
-											value={form.minutes}
+											value={form.time.minutes}
 											type="number"
 											name="minutes"
 											placeholder="00"
@@ -350,6 +371,7 @@ const CreateRecipe = () => {
 						
 						<ImageInput
 							onChange={(file) => setForm({...form, avatar: file})}
+							value={form.avatar}
 							height={'600px'}
 							width={'400px'}
 							borderRadius={'12px'}
@@ -361,7 +383,7 @@ const CreateRecipe = () => {
 						style={{ width: 300, marginTop: 24, alignSelf: 'center', fontSize: '1rem' }}
 						onClick={checkForm}
 					>
-						Submit
+						{props.mode !== 'edit' ? "Submit" : "Edit"}
 					</Button.Primary>
 				</Container>
 			</Section>

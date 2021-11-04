@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
 const size = {height: 300, width: 300, borderRadius: 300 / 2}
@@ -55,6 +55,13 @@ const HoverDisplay = styled.div`
 export default function ImageInput(props) {
   const [image, setImage] = useState({file: null, preview: null})
   const inputRef = useRef()
+
+  useEffect(() => {
+    if (typeof props.value === 'string') {
+      setImage({...image, preview: props.value})
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.value])
 
   function handleClick() {
     inputRef.current.click()
