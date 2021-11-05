@@ -9,7 +9,7 @@ const MealPlan = () => {
   const params = useParams();
   const mealPlanId = params?.mealPlanId;
 
-  const [mealPlanData, setMealPlanData] = useState();
+  const [mealPlanData, setMealPlanData] = useState({});
   useEffect(() => {
     async function fetchMealPlanData() {
       const res = await axios.get(`/api/mealPlan/${mealPlanId}`);
@@ -20,6 +20,19 @@ const MealPlan = () => {
 
   const shoppingList = mealPlanData?.shoppingList;
   const picture = mealPlanData?.recipe?.picture?.avatar;
+
+  
+  async function toggleShoppingItem(id, value, index) {
+    const array = [...shoppingList];
+    array.splice(index, 1, {...shoppingList[index], got: !value})
+
+    await axios.put(`/api/mealPlan/${mealPlanId}/${id}/${!value}`)
+    .then((res) => {
+      console.log(res.data)
+    })
+
+    setMealPlanData({...mealPlanData, shoppingList: array})
+  }
 
   return (
     <>
@@ -37,7 +50,7 @@ const MealPlan = () => {
         />
         <h1>Meal Planner</h1>
         <div>
-          {shoppingList?.map((item) => {
+          {shoppingList?.map((item, index) => {
             return (
               <div key={item._id}>
                 <label style={{ marginLeft: "10px" }}>
@@ -45,9 +58,10 @@ const MealPlan = () => {
                     type="checkbox"
                     id={`${item._id}`}
                     name={`${item.name}`}
-                    value="shoppingList"
+                    checked={item.got}
                     style={{ marginLeft: "10px", marginBottom: "15px" }}
                     className="strikethrough"
+                    onChange={() => toggleShoppingItem(item._id, item.got, index)}
                   />{" "}
                   <span>
                     <b>{`${item.amount} ${item.unit}`}</b> {`${item.name}`}
