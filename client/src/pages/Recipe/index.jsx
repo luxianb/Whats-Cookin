@@ -110,6 +110,13 @@ export default function RecipePage(props) {
                 <Chip.EstTime time={recipe?.time} />
               </GridRow>
               <p style={{wordWrap: 'normal'}}>{recipe?.description}</p>
+              {recipe?.tags?.length > 0 && (
+                <GridRow style={{marginBottom: '1rem', marginTop: -6}} gap={"3px"}>
+                  {recipe.tags.map((tag) => (
+                    <Chip.Tag text={tag} />
+                  ))}
+                </GridRow>
+              )}
               <GridRow>
                 <AddToPlannerButton />
                 {loggedUser && recipe.owner === loggedUser?._id && (

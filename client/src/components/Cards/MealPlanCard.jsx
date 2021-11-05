@@ -13,7 +13,7 @@ const MealPlanCard = (prop) => {
       <Button.Primary 
         color={yetToStart ? "black" : "#FFB800"}
         rounded
-        onClick={() => history.push(`#`)}
+        onClick={() => history.push(`/planner/${prop.id}`)}
       >
         {yetToStart ? "start" : "continue"}
       </Button.Primary>
