@@ -9,8 +9,7 @@ const MealPlanCard = (prop) => {
 
   async function handleDelete() {
     const res = await axios.delete(`/api/mealPlan/${prop.id}`)
-    console.log(res.data)
-    prop.onMealDelete(prop.id)
+    prop.onMealDelete(res.data)
   }
 
   const GoToPlanButton = () => {

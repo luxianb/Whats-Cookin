@@ -30,13 +30,13 @@ export default function RecipePage(props) {
   useEffect(() => {
     async function fetchRecipeData() {
       const res = await axios.get(`/api/recipes/${params.recipeId}`)
-      console.log('recipeInfo',res.data);
+      // console.log('recipeInfo',res.data);
       setRecipe(res.data)
     }
     
     async function fetchReviews() {
       const res = await axios.get(`/api/reviews/${params.recipeId}`)
-      console.log('reviews',res.data);
+      // console.log('reviews',res.data);
       setReviews(res.data)
     }
     fetchReviews()
@@ -52,8 +52,6 @@ export default function RecipePage(props) {
   useEffect(() => {
     async function fetchLoggedUserInfo() {
       const res = await axios.get('/api/session');
-      console.log(res);
-
       setLoggedUser(res.data)
     }
     fetchLoggedUserInfo()

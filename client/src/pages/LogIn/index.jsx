@@ -59,6 +59,7 @@ export default function LogIn(props) {
               value={form.email}
               placeholder="email"
               style={{marginBottom: '12px', minWidth: '300px'}}
+              type="email"
             />
 
             <Label>Password</Label>
@@ -68,6 +69,7 @@ export default function LogIn(props) {
               value={form.password}
               placeholder="password"
               style={{minWidth: '300px'}}
+              type="password"
             />
             {/* Error display */}
             {error && (

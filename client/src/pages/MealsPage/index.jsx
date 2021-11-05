@@ -14,7 +14,7 @@ export default function MealsPage() {
 
     async function fetchPlanData() {
       const res = await axios.get('/api/mealPlan')
-      console.log(res.data)
+      // console.log(res.data)
       setMealPlans(res.data)
     }
     fetchMealData()
@@ -24,7 +24,7 @@ export default function MealsPage() {
   async function addToPlanner(_id) {
     axios.post(`/api/mealPlan/${_id}`)
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
     })
   }
 
@@ -56,7 +56,7 @@ export default function MealsPage() {
         function toggleShoppingItem(id, value) {
           axios.put(`/api/mealPlan/${mealPlan._id}/${id}/${!value}`)
           .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
           })
         }
 

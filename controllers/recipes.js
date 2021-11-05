@@ -142,7 +142,6 @@ router.get("/:id", async (req, res) => {
 //? Edit
 router.put("/:id/edit", upload.single("avatar"),  async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
 
   if (req.file) {
     const recipe = await Recipe.findById(id)
@@ -164,8 +163,6 @@ router.put("/:id/edit", upload.single("avatar"),  async (req, res) => {
   req.body.ingredients = parsedIngredients
   req.body.time = parsedTime
   req.body.tags = parsedTags
-
-  console.log(req.body);
 
   const recipies = await Recipe.findByIdAndUpdate(id, {$set: req.body}, {new: true});
   res.json(recipies);

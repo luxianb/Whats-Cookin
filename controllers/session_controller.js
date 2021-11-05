@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
 // Route to logins
 router.post('/', async (req, res) => {
   try {
-    console.log("res.body",req.body)
+    // console.log("res.body",req.body)
     const userFound = await Users.findOne({email: req.body.email})
-    console.log('userInfo',userFound);
+    // console.log('userInfo',userFound);
     if (!userFound) {
       return res.json("Unable to find user, make sure you typed in the right email")
     }

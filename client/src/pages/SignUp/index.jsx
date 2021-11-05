@@ -81,8 +81,6 @@ export default function SignUp() {
     } else {
       setFormErr({...formErr, email: res.data})
     }
-    
-    console.log(res)
   }
 
   return(

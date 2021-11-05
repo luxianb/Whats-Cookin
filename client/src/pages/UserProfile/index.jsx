@@ -26,17 +26,17 @@ const UserProfile = () => {
 
 	async function fetchUserInfo() {
 		const res = await axios.get(`/api/user/${params.userId}`);
-		console.log(res.data);
+		// console.log(res.data);
 		setUserInfo(res.data)
 	}
 	async function fetchUserRecipes() {
 		const res = await axios.get(`/api/recipes/user/${params.userId}`);
-		console.log(res.data);
+		// console.log(res.data);
 		setUserRecipes(res.data)
 	}
 	async function fetchPlannerInfo() {
 		const res = await axios.get(`/api/mealPlan/userPlans/${params.userId}`);
-		console.log(res.data);
+		// console.log(res.data);
 		setPlanner(res.data)
 	}
 
@@ -92,7 +92,7 @@ const UserProfile = () => {
 								currentStep={mealPlan?.currentStep}
 								time={mealPlan?.recipe?.time}
 								shoppingList={mealPlan?.shoppingList}
-								onMealDelete={(id) => setPlanner(planner.filter((plan) => plan._id !== id))}
+								onMealDelete={(deletedMeal) => setPlanner(planner.filter((plan) => plan._id !== deletedMeal._id))}
 							/>
 						))}
 

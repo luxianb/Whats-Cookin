@@ -107,8 +107,6 @@ const CreateRecipe = (props) => {
 			async function fetchRecipeInfo() {
 				const res = await axios.get(`/api/recipes/${params.recipeId}`)
 
-				console.log(res.data)
-
 				setForm({name : res.data.name, description: res.data.description, tags: res.data.tags, time: {hour: res.data.time?.hour || '', minutes: res.data.time?.minutes || ''}, avatar: res.data?.picture?.avatar});
 				setSteps(res.data.steps)
 				setIngredients(res.data.ingredients)
