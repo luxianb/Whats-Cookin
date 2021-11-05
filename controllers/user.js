@@ -18,6 +18,11 @@ router.get('/:id', async(req, res) => {
 // Route to create user
 router.post('/', upload.single("image"), async (req, res) => {
   try {
+    const emailExists = await Users.findOne({email: req.body.email}) 
+    if (emailExists) {
+      return res.json('Email is already used')
+    }
+
     // ? If user uploaded an image, add to cloudinary and attach result to req.body
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path);
