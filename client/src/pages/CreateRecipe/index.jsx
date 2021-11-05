@@ -1,40 +1,100 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import axios from "axios";
 import { useHistory, useParams } from 'react-router';
 
 import Button, { BackButton } from "../../components/Buttons";
 import { Col, Container, GridRow, Page, Row, Section } from '../../components/Containers/index';
 import ErrorPrompt from "../../components/ErrorPrompt";
-import Input, { TextArea } from "../../components/Inputs";
-import ImageInput from "../../components/Inputs/ImageInput";
-import TagsInput from "../../components/Inputs/TagsInput";
+import Input, { TextArea, ImageInput, TagsInput } from "../../components/Inputs";
 import LoginRequiredModal from "../../components/Modals/LoginRequired";
 import { DeleteButton, StepDeleteButton } from "./components";
+import {Step, Ingredient} from './classes';
 
-class Ingredient {
-	constructor(amount, unit, name) {
-		this.amount = amount || '';
-		this.unit = unit || '';
-		this.name = name || '';
-	}
-}
-class Step {
-	constructor(title, body) {
-		this.title = title || '';
-		this.body = body || '';
+const initialState = {
+	form: {
+		name: '',
+		description: '',
+		tags: [],
+		time: {hour: '', minutes: ''},
+		avatar: null,
+		ingredients: [new Ingredient()],
+		steps: [new Step()]
+	},
+	loggedUser: null,
+	errors: { name: '', description: '', time: '', ingredients: [], steps: [] },
+	modal: '',
+};
+
+const reducer = (state, action) => {
+	const {form, form: {ingredients, steps, time}, errors} = state;
+	switch(action.type) {
+		case "SET_FORM": 
+			return {...state, form: {...state.form, ...action.payload}};
+		case "SET_TIME": 
+			return {...state, form: {...state.form, time: {...state.form.time, ...action.payload}}};
+		case "SET_INGREDIENTS": 
+			return {...state, form: {...state.form, ingredients: action.payload}};
+		case "REMOVE_INGREDIENT": {
+			const array = [...ingredients];
+			array.splice(action.index, 1);
+
+			return {...state, form: {...form, ingredients: array}};
+		}
+		case "ADD_INGREDIENT_FIELD": 
+			return {...state, form: {...form, ingredients: [...ingredients, new Ingredient()]}};
+			
+		case "SET_STEPS": 
+			return {...state, form: {...state.form, steps: action.payload}};
+		case "REMOVE_STEP": {
+			const array = [...steps];
+			array.splice(action.index, 1);
+
+			return {...state, form: {...form, steps: array}};
+		}
+		case "ADD_STEP_FIELD": 
+				return {...state, form: {...form, steps: [...steps, new Step()]}};
+
+		case "SET_ERROR": 
+			return {...state, errors: {...state.errors, ...action.payload}};
+		case "SET_LOGGEDUSER": 
+			return {...state, loggedUser: action.payload};
+		case "SET_MODAL": 
+			return {...state, modal: action.payload};
+
+		default: return state;
 	}
 }
 
 const CreateRecipe = (props) => {
-	const [errors, setErrors] = useState({ name: '', description: '', time: '', ingredients: [], steps: [] })
-	const [ingredients, setIngredients] = useState([new Ingredient()])
-	const [steps, setSteps] = useState([new Step()])
-	const [loggedUser, setLoggedUser] = useState(null);
-	const [modal, setModal] = useState('')
+	const [state, dispatch] = useReducer(reducer, initialState)
+	const {form, form: {ingredients, steps}, errors, loggedUser, modal} = state;
 	const history = useHistory()
 	const params = useParams()
+
+	// dispatches
+	const setForm = (value) => {
+		dispatch({type: "SET_FORM", payload: value})
+	}
+	const setTime = (value) => {
+		dispatch({type: "SET_TIME", payload: value})
+	}
+	const setIngredients = (value) => {
+		dispatch({type: "SET_INGREDIENTS", payload: value})
+	}
+	const setSteps = (userInfo) => {
+		dispatch({type: "SET_STEPS", payload: userInfo})
+	}
+	const setModal = (modalName) => {
+		dispatch({type: "SET_MODAL", payload: modalName})
+	}
+	const setErrors = (value) => {
+		dispatch({type: "SET_ERROR", payload: value})
+	}
+	const setLoggedUser = (userInfo) => {
+		dispatch({type: "SET_LOGGEDUSER", payload: userInfo})
+	}
 
 	useEffect(() => {
 		async function fetchUserInfo() {
@@ -59,17 +119,11 @@ const CreateRecipe = (props) => {
 	}, [])
 
 
-	const [form, setForm] = useState({
-		name: '',
-		description: '',
-		tags: [],
-		time: {hour: '', minutes: ''},
-		avatar: null,
-	});
+	
 
 	const handleChange = (e) => {
 		const { name } = e.target;
-		setForm({ ...form, [name]: e.target.value });
+		setForm({ [name]: e.target.value });
 	};
 
 	function handleIngredientChange(e, index) {
@@ -88,14 +142,12 @@ const CreateRecipe = (props) => {
 		setIngredients(array)
 	}
 
-	function handleRemoveIngredient(index) {
-		const array = [...ingredients]
-		array.splice(index, 1)
-		setIngredients(array)
+	function removeIngredient(index) {
+		dispatch({type: "REMOVE_INGREDIENT", index});
 	}
 
-	function addNewIngredientField() {
-		setIngredients([...ingredients, new Ingredient('')]);
+	function addIngredient() {
+		dispatch({type: "ADD_INGREDIENT_FIELD"});
 	}
 
 	function handleStepChange(e, index) {
@@ -114,14 +166,12 @@ const CreateRecipe = (props) => {
 		setSteps(array)
 	}
 
-	function addNewStepField() {
-		setSteps([...steps, new Step('')]);
+	function addStep() {
+		dispatch({type: "ADD_STEP_FIELD"});
 	}
 
-	function handleRemoveStep(index) {
-		const array = [...steps]
-		array.splice(index, 1)
-		setSteps(array)
+	function removeStep(index) {
+		dispatch({type: "REMOVE_STEP", index});
 	}
 
 	function checkForm() {
@@ -189,11 +239,7 @@ const CreateRecipe = (props) => {
 				history.push(`/profile/${loggedUser._id}?display=recipes`)
 			}
 		} else {
-			const res = await axios.post('/api/recipes/new', formData, {
-				headers: {
-					 'Content-Type': 'multipart/form-data'
-				}
-		 });
+			const res = await axios.post('/api/recipes/new', formData);
 	
 			if (typeof res.data === 'object') {
 				history.push(`/profile/${loggedUser._id}?display=recipes`)
@@ -216,6 +262,7 @@ const CreateRecipe = (props) => {
 								</h1>
 							</GridRow>
 
+							{/* Recipe name Input */}
 							<Col style={{ marginBottom: 12 }}>
 								<Input
 									onChange={(e) => handleChange(e)}
@@ -224,10 +271,11 @@ const CreateRecipe = (props) => {
 									name="name"
 									placeholder="Meal Name"
 									error={errors.name}
-								/>
+									/>
 								{errors.name && <ErrorPrompt>{errors.name}</ErrorPrompt>}
 							</Col>
 
+							{/* Recipe description input */}
 							<Col style={{ marginBottom: 18 }}>
 								<TextArea
 									onChange={(e) => handleChange(e)}
@@ -241,18 +289,20 @@ const CreateRecipe = (props) => {
 								{errors.description && <ErrorPrompt>{errors.description}</ErrorPrompt>}
 							</Col>
 
+							{/* Tags input */}
 							<TagsInput
 								onChange={(data) => setForm({ ...form, tags: data })}
 								value={form.tags}
 								style={{ marginBottom: 18 }}
 							/>
 
+							{/* Est time input */}
 							<Col style={{ marginBottom: 18 }}>
 								<GridRow style={{ alignItems: 'center', fontSize: '.9rem' }} gap={'6px'}>
 									<p style={{ margin: 0 }}>Est. Time to cook</p>
 									<Row vCenter>
 										<Input
-											onChange={(e) => setForm({...form, time: {...form.time, hour: e.target.value}})}
+											onChange={(e) => setTime({hour: e.target.value})}
 											value={form.time.hour}
 											type="number"
 											name="hour"
@@ -266,7 +316,7 @@ const CreateRecipe = (props) => {
 									</Row>
 									<Row vCenter>
 										<Input
-											onChange={(e) => setForm({...form, time: {...form.time, minutes: e.target.value}})}
+											onChange={(e) => setTime({minutes: e.target.value})}
 											value={form.time.minutes}
 											type="number"
 											name="minutes"
@@ -282,12 +332,13 @@ const CreateRecipe = (props) => {
 								{errors.time && <ErrorPrompt>{errors.time}</ErrorPrompt>}
 							</Col>
 
+							{/* Ingredients input */}
 							<h2 style={{ marginBottom: 12 }}>Ingredients</h2>
 							<Col style={{ marginBottom: '-6px' }}>
 								{ingredients.map((ingredient, index) => (
 									<Col key={`ing${index}`} style={{ marginBottom: 6 }}>
 										<GridRow key={index} colTemplate={'8rem 4rem 1fr'} gap={'6px'} style={{ position: 'relative' }}>
-											{index !== 0 && (<DeleteButton onClick={() => handleRemoveIngredient(index)} />)}
+											{index !== 0 && (<DeleteButton onClick={() => removeIngredient(index)} />)}
 											<Input
 												type="number"
 												name='amount'
@@ -318,7 +369,7 @@ const CreateRecipe = (props) => {
 									</Col>
 								))}
 								<Button.Ghost
-									onClick={() => addNewIngredientField()}
+									onClick={() => addIngredient()}
 									color={'#c4c4c4'}
 									style={{ borderStyle: 'dashed', marginTop: 12 }}
 									rounded
@@ -327,6 +378,7 @@ const CreateRecipe = (props) => {
 								</Button.Ghost>
 							</Col>
 
+							{/* Steps input */}
 							<h2 style={{ marginBottom: 12 }}>Steps</h2>
 							<Col style={{ marginBottom: '-12px' }}>
 								{steps.map((step, index) => (
@@ -334,7 +386,7 @@ const CreateRecipe = (props) => {
 										<Row style={{ justifyContent: 'space-between', marginBottom: 6 }}>
 											<h3 style={{ margin: 0 }}>Step {index + 1}</h3>
 											{index !== 0 && (
-												<StepDeleteButton onClick={() => handleRemoveStep(index)} />
+												<StepDeleteButton onClick={() => removeStep(index)} />
 											)}
 										</Row>
 										<Input
@@ -360,7 +412,7 @@ const CreateRecipe = (props) => {
 								))}
 							</Col>
 							<Button.Ghost
-								onClick={() => addNewStepField()}
+								onClick={() => addStep()}
 								color={'#c4c4c4'}
 								style={{ borderStyle: 'dashed', marginTop: 12 }}
 								rounded
@@ -369,6 +421,7 @@ const CreateRecipe = (props) => {
 							</Button.Ghost>
 						</Col>
 						
+						{/* Recipe Picture Input */}
 						<ImageInput
 							onChange={(file) => setForm({...form, avatar: file})}
 							value={form.avatar}
