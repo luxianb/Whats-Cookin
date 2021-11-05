@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { GridRow } from "../Containers";
+export { default as TagsInput } from './TagsInput';
+export { default as ImageInput } from './ImageInput';
 
 const Input = styled.input`
   padding: 6px 12px;
