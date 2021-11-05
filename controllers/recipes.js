@@ -175,6 +175,11 @@ router.put("/:id/edit", upload.single("avatar"),  async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    const recipe = await Recipe.findById(id)
+    if (recipe.picture) {
+      await cloudinary.uploader.destroy(recipe.picture.cloudinary_id);
+    }
+
     const result = await Recipe.findByIdAndDelete(id);
     //? SEND BACK THE RESULT TO REACT SO IT CAN UPDATE
     res.json(result);
