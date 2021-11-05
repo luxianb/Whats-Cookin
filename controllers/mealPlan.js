@@ -88,9 +88,9 @@ router.delete('/:id', (req, res) => {
   MealPlan.findByIdAndUpdate(
     req.params.id,
     {$set: {removed: true}},
-    (err) => {
+    (err, deletedData) => {
       console.log(err);
-      res.json("Plan removed")
+      res.json(deletedData)
     })
 })
 
