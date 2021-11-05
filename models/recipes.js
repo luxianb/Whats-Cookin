@@ -14,7 +14,7 @@ const recipeSchema = Schema(
     },
     ingredients: [{ amount: Number, unit: String, name: String }],
     picture: {
-      avatar: String,
+      url: String,
       cloudinary_id: String,
     },
     steps: [{ title: String, body: String }],

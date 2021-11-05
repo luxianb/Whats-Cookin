@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipes");
-const cloudinary = require("../imageUtility/cloudinary");
-const upload = require("../imageUtility/multer");
-const Users = require("../models/users");
+const cloudinary = require("../util/cloudinary");
+const upload = require("../util/multer");
 
 //* Routes
 //* Initial Seed
@@ -119,7 +118,7 @@ router.post("/new", upload.single("avatar"), async (req, res) => {
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path);
       req.body.picture = {
-        avatar: result.secure_url,
+        url: result.secure_url,
         cloudinary_id: result.public_id,
       };
     }
@@ -149,7 +148,7 @@ router.put("/:id/edit", upload.single("avatar"),  async (req, res) => {
 
     const result = await cloudinary.uploader.upload(req.file.path);
     req.body.picture = {
-      avatar: result.secure_url,
+      url: result.secure_url,
       cloudinary_id: result.public_id,
     };
   }
