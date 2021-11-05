@@ -7,6 +7,12 @@ import { CardBase, CardButtonRow, CardContent, CardImage } from "./components";
 const MealPlanCard = (prop) => {
   const history = useHistory();
 
+  async function handleDelete() {
+    const res = await axios.delete(`/api/mealPlan/${prop.id}`)
+    console.log(res.data)
+    prop.onMealDelete(prop.id)
+  }
+
   const GoToPlanButton = () => {
     const yetToStart = prop.currentStep === 0;
     return (
@@ -19,22 +25,16 @@ const MealPlanCard = (prop) => {
       </Button.Primary>
   )};
 
-  const DeleteButton = () => {
-    const handleDelete = async () => {
-      const res = await axios.delete(`/api/mealPlan/${prop.id}`)
-      prop.onMealDelete(res.data)
-    }
-
-    return (
+  const DeleteButton = () => (
     <Button.Alt 
       color={'black'} 
       style={{ backgroundColor: 'rgba(0,0,0,.2)' }} 
       rounded
-      onClick={handleDelete}
+      onClick={() => handleDelete()}
     >
       <i className="fa-regular fa-trash-can" />
     </Button.Alt>
-  )};
+  );
 
   return (
     <CardBase style={prop.style}>

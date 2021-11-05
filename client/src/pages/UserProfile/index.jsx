@@ -92,7 +92,7 @@ const UserProfile = () => {
 								currentStep={mealPlan?.currentStep}
 								time={mealPlan?.recipe?.time}
 								shoppingList={mealPlan?.shoppingList}
-								onMealDelete={(deletedMeal) => setPlanner(planner.filter((plan) => plan._id !== deletedMeal._id))}
+								onMealDelete={(id) => setPlanner(planner.filter((plan) => plan._id !== id))}
 							/>
 						))}
 
