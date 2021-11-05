@@ -234,11 +234,12 @@ const CreateRecipe = (props) => {
 		formData.append('ingredients', JSON.stringify(ingredients))
 
 		let res;
+		
 		// IF EDIT then send edit request
 		if (props.mode === 'edit') {
 			res = await axios.put(`/api/recipes/${params.recipeId}/edit`, formData);
 		} else {
-		// ELSE send create request
+		// ELSE send create request 
 			res = await axios.post('/api/recipes/new', formData);
 		}
 
