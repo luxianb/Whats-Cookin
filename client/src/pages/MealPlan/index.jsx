@@ -28,7 +28,7 @@ const MealPlan = () => {
 
     await axios.put(`/api/mealPlan/${mealPlanId}/${id}/${!value}`)
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
     })
 
     setMealPlanData({...mealPlanData, shoppingList: array})

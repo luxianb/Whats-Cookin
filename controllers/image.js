@@ -5,11 +5,11 @@ const Image = require("../models/image");
 
 //* Upload image
 router.post("/", upload.single("avatar"), async (req, res) => {
-    console.log("req.file", req.file);
+    // console.log("req.file", req.file);
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
-    console.log("result", result)
+    // console.log("result", result)
     // Create new image
     let image = new Image({
       name: req.body.name,

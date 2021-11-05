@@ -26,17 +26,17 @@ const UserProfile = () => {
 
 	async function fetchUserInfo() {
 		const res = await axios.get(`/api/user/${params.userId}`);
-		console.log(res.data);
+		// console.log(res.data);
 		setUserInfo(res.data)
 	}
 	async function fetchUserRecipes() {
 		const res = await axios.get(`/api/recipes/user/${params.userId}`);
-		console.log(res.data);
+		// console.log(res.data);
 		setUserRecipes(res.data)
 	}
 	async function fetchPlannerInfo() {
 		const res = await axios.get(`/api/mealPlan/userPlans/${params.userId}`);
-		console.log(res.data);
+		// console.log(res.data);
 		setPlanner(res.data)
 	}
 

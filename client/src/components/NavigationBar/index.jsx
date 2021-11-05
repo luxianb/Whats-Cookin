@@ -13,7 +13,7 @@ const NavigationBar = (props) => {
   useEffect(() => {
     async function fetchLoggedUserInfo() {
       const res = await axios.get('/api/session');
-      console.log(res);
+      // console.log(res);
 
       setLoggedUser(res.data)
     }
