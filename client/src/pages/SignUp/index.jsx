@@ -78,7 +78,10 @@ export default function SignUp() {
     const res = await axios.post('/api/user', formData)
     if (typeof res.data === 'object') {
       setModalStatus('success')
+    } else {
+      setFormErr({...formErr, email: res.data})
     }
+    
     console.log(res)
   }
 
