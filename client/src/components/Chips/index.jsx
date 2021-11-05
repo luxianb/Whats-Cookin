@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { hexToRGB } from "../../util";
 
 const ChipContainer = styled.div`
   color: ${prop => prop.color || 'black'};
@@ -40,9 +41,19 @@ const ShoppingListChip = (props) => {
     </ChipContainer>
 )}
 
+const TagChip = (props) => {
+  return (
+    <ChipContainer color={props.color || '#ffab00'} backgroundColor={hexToRGB(props.color || '#ffab00', .2)} style={props.style}>
+      <Text>{props.text}
+      </Text>
+    </ChipContainer>
+  )
+}
+
 const Chip = {
   EstTime: EstTimeChip,
-  ShoppingList: ShoppingListChip
+  ShoppingList: ShoppingListChip,
+  Tag: TagChip
 };
 
 export default Chip;
