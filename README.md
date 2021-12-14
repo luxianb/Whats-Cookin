@@ -1,5 +1,7 @@
 # Project 3 - Startup Week (What’s Cookin)
 
+Deployment link: https://floating-basin-88540.herokuapp.com/
+
 ## What is your application? 
 
 Essentially this app is where users can subscribe to a service where they can select different cuisines and recipes of their preference and follow along step by step with the recipes provided 
